@@ -24,7 +24,7 @@ export default function Hero() {
 
     console.log(res);
   };
-  //aaaaa
+  //1111asdasdasdaaasda
   useEffect(() => {
     record();
     const filteredData = WodData.filter((data) => {
@@ -58,19 +58,6 @@ export default function Hero() {
                     <Label>WODNAME</Label>
                     <Name>{wod.name}</Name>
                   </Column>
-                  <Column>
-                    <Label>WODNAME</Label>
-                    <Name>{wod.name}</Name>
-                  </Column>
-                  <Column>
-                    <Label>WODNAME</Label>
-                    <Name>{wod.name}</Name>
-                  </Column>
-                  <Column>
-                    <Label>WODNAME</Label>
-                    <Name>{wod.name}</Name>
-                  </Column>
-
                   <Column>
                     <Label>MOVEMENT</Label>
                     {wod.workout.map((item, index) => {
