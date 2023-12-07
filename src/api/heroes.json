@@ -1,0 +1,187 @@
+[
+  {
+    "gender": "M",
+    "name": "JT",
+    "img": "https://www.crossfit.com/wp-content/uploads/2020/06/26151042/JT-576x768.jpg",
+    "rounds": "21-15-9",
+    "time": "For Time",
+    "workout": ["Handstand", "push-ups", "Ring dips", "Push-ups"],
+    "story": "2005년 6월 28일 쿠마르 주 아프가니스탄 아사다바드 인근에서 전투 작전을 수행하던 중 사망한 웨스트버지니아 주 미드웨이 출신의 제프 테일러(Jeff Taylor, 30세) 하사관을 기리기 위한 것입니다.",
+    "startDay": "2020.07.06"
+  },
+  {
+    "gender": "M",
+    "name": "MICHAEL",
+    "img": "https://www.crossfit.com/wp-content/uploads/2020/08/12094650/MichaelMcGreevy.jpg",
+    "rounds": "3",
+    "time": "For Time",
+    "workout": ["Run 800m", "Back extensions 50", "Sit-ups 50"],
+    "story": "2005년 6월 28일 아프가니스탄에서 사망한 뉴욕주 포트빌 출신의 해군 중위 마이클 맥그리비(30세)를 기리기 위한 것입니다.",
+    "startDay": "2020.07.15"
+  },
+  {
+    "gender": "M",
+    "name": "MURPH",
+    "img": "https://www.crossfit.com/wp-content/uploads/2020/08/12094949/Michael_P_Murphy-425x768.jpg",
+    "rounds": "-",
+    "time": "For Time",
+    "workout": [
+      "1 mile Run",
+      "100 Pull-ups",
+      "200 Push-ups",
+      "300 Squats",
+      "1 mile Run"
+    ],
+    "story": "-",
+    "startDay": "-"
+  },
+  {
+    "gender": "M",
+    "name": "DANIEL",
+    "img": "https://www.crossfit.com/wp-content/uploads/2020/06/26151247/Daniel-300x302.jpg",
+    "rounds": "-",
+    "time": "For Time",
+    "workout": [
+      "50 Pull-ups",
+      "400 meter run",
+      "95 pound Thruster, 21 reps",
+      "800 meter run",
+      "95 pound Thruster, 21 reps",
+      "400 meter run",
+      "50 Pull-ups"
+    ],
+    "story": "-",
+    "startDay": "-"
+  },
+  {
+    "gender": "M",
+    "name": "JOSH",
+    "img": "https://www.crossfit.com/wp-content/uploads/2020/06/26151414/Josh-e1593209716988.jpg",
+    "rounds": "-",
+    "time": "For Time",
+    "workout": [
+      "95 pound Overhead squat, 21 reps",
+      "42 Pull-ups",
+      "95 pound Overhead squat, 15 reps",
+      "30 Pull-ups",
+      "95 pound Overhead squat, 9 reps",
+      "18 Pull-ups"
+    ],
+    "story": "-",
+    "startDay": "-"
+  },
+  {
+    "gender": "M",
+    "name": "JASON",
+    "img": "https://www.crossfit.com/wp-content/uploads/2020/06/26151538/Jason-e1593537746277-300x305.jpg",
+    "rounds": "-",
+    "time": "For Time",
+    "workout": [
+      "100 Squats",
+      "5 Muscle-ups",
+      "75 Squats",
+      "10 Muscle-ups",
+      "50 Squats",
+      "15 Muscle-ups",
+      "25 Squats",
+      "20 Muscle-ups"
+    ],
+    "story": "-",
+    "startDay": "-"
+  },
+  {
+    "gender": "M",
+    "name": "BADGER",
+    "img": "https://www.crossfit.com/wp-content/uploads/2020/06/26151600/Badger-300x225.jpg",
+    "rounds": "3",
+    "time": "For Time",
+    "workout": [
+      "95 pound Squat clean, 30 reps",
+      "30 Pull-ups",
+      "Run 800 meters"
+    ],
+    "story": "-",
+    "startDay": "-"
+  },
+  {
+    "gender": "M",
+    "name": "JOSHIE",
+    "img": "https://www.crossfit.com/wp-content/uploads/2020/06/26151616/Joshie-300x225.jpg",
+    "rounds": "3",
+    "time": "For Time",
+    "workout": [
+      "40 pound Dumbbell snatch, 21 reps, right arm",
+      "21 L Pull-ups",
+      "40 pound Dumbbell snatch, 21 reps, left arm",
+      "21 L Pull-ups"
+    ],
+    "story": "-",
+    "startDay": "-"
+  },
+  {
+    "gender": "M",
+    "name": "NATE",
+    "img": "https://www.crossfit.com/wp-content/uploads/2020/06/30102742/Nate-512x768.jpg",
+    "rounds": "Max",
+    "time": "For Time",
+    "workout": [
+      "2 Muscle-ups",
+      "4 Handstand Push-ups",
+      "8 2-Pood Kettlebell swings"
+    ],
+    "story": "-",
+    "startDay": "-"
+  },
+  {
+    "gender": "M",
+    "name": "RANDY",
+    "img": "https://www.crossfit.com/wp-content/uploads/2020/06/30102741/Randy-e1593738429233-300x347.jpg",
+    "rounds": "-",
+    "time": "For Time",
+    "workout": ["75 Power snatches(75/55LB)"],
+    "story": "-",
+    "startDay": "-"
+  },
+  {
+    "gender": "M",
+    "name": "TOMMY V",
+    "img": "https://www.crossfit.com/wp-content/uploads/2020/06/30102738/TommyV-e1593538518842-300x383.jpg",
+    "rounds": "-",
+    "time": "For Time",
+    "workout": [
+      "115 pound Thruster, 21 reps",
+      "15 ft Rope Climb, 12 ascents",
+      "115 pound Thruster, 15 reps",
+      "15 ft Rope Climb, 9 ascents",
+      "115 pound Thruster, 9 reps",
+      "15 ft Rope Climb, 6 ascents"
+    ],
+    "story": "-",
+    "startDay": "-"
+  },
+  {
+    "gender": "M",
+    "name": "GRIFF",
+    "img": "https://www.crossfit.com/wp-content/uploads/2020/06/30102735/Griff-390x768.jpg",
+    "rounds": "-",
+    "time": "For Time",
+    "workout": [
+      "Run 800 meters",
+      "Run 400 meters backwards",
+      "Run 800 meters",
+      "Run 400 meters backwards"
+    ],
+    "story": "-",
+    "startDay": "-"
+  },
+  {
+    "gender": "M",
+    "name": "RYAN",
+    "img": "https://www.crossfit.com/wp-content/uploads/2020/06/30102738/TommyV-e1593538518842-300x383.jpg",
+    "rounds": "5",
+    "time": "For Time",
+    "workout": ["7 Muscle-ups", "21 Burpees"],
+    "story": "-",
+    "startDay": "-"
+  }
+]
