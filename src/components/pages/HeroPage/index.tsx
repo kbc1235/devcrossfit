@@ -16,15 +16,16 @@ export default function Hero() {
   const [data, setData] = useState<Wod[]>([]);
   const [total, setTotal] = useState<number>(0);
   const [genderFilter, setGenterFilter] = useState<string>("ALL");
-
+  const [test, setTest] = useState<string>("");
   const record = async () => {
     const res = await axios.get(
       " https://wodwell.com/wp-json/wodwell/v2/pages/filters/?category=hero-wods"
     );
-
-    console.log(res);
+    if (res.status === 200) {
+      setTest(res.data.wods);
+    }
   };
-  //1111asdasdasdaaasda
+
   useEffect(() => {
     record();
     const filteredData = WodData.filter((data) => {
@@ -37,6 +38,8 @@ export default function Hero() {
     setTotal(filteredData.length);
     setData(filteredData as Wod[]);
   }, [genderFilter]);
+
+  console.log(test);
 
   return (
     <Layout title={"HERO WOD"} backBtn>
