@@ -9,7 +9,7 @@ export default function CrossfitMain() {
     <Layout title={"크로스핏"} backBtn>
       <Maps />
       <Section>
-        <SubBox>차후에 추가 예정</SubBox>
+        <SubBox>추후에 추가 예정</SubBox>
       </Section>
     </Layout>
   );
