@@ -14,7 +14,7 @@ export default function CrossfitMain() {
       <Section>
         <SubBox>
           <SubBtn onClick={() => navigate("/crossfitbasic")}>
-            크린이를 위한 크로스핏
+            크린이를 위한 크로스핏 알짜 정보
           </SubBtn>
         </SubBox>
       </Section>
