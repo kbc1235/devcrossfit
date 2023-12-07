@@ -177,10 +177,20 @@
   {
     "gender": "M",
     "name": "RYAN",
-    "img": "https://www.crossfit.com/wp-content/uploads/2020/06/30102738/TommyV-e1593538518842-300x383.jpg",
+    "img": "https://www.crossfit.com/wp-content/uploads/2020/07/02182043/Ryan-300x308.jpg",
     "rounds": "5",
     "time": "For Time",
     "workout": ["7 Muscle-ups", "21 Burpees"],
+    "story": "-",
+    "startDay": "-"
+  },
+  {
+    "gender": "M",
+    "name": "ERIN",
+    "img": "https://www.crossfit.com/wp-content/uploads/2020/07/02182042/Erin.jpg",
+    "rounds": "5",
+    "time": "For Time",
+    "workout": ["40 pound Dumbbells split clean, 15 reps", "21 Pull-ups"],
     "story": "-",
     "startDay": "-"
   }

@@ -16,18 +16,8 @@ export default function Hero() {
   const [data, setData] = useState<Wod[]>([]);
   const [total, setTotal] = useState<number>(0);
   const [genderFilter, setGenterFilter] = useState<string>("ALL");
-  const [test, setTest] = useState<string>("");
-  const record = async () => {
-    const res = await axios.get(
-      " https://wodwell.com/wp-json/wodwell/v2/pages/filters/?category=hero-wods"
-    );
-    if (res.status === 200) {
-      setTest(res.data.wods);
-    }
-  };
 
   useEffect(() => {
-    record();
     const filteredData = WodData.filter((data) => {
       if (genderFilter === "ALL") {
         return true;
@@ -39,8 +29,6 @@ export default function Hero() {
     setData(filteredData as Wod[]);
   }, [genderFilter]);
 
-  console.log(test);
-
   return (
     <Layout title={"HERO WOD"} backBtn>
       <Select value={genderFilter} setValue={setGenterFilter} />
@@ -51,12 +39,6 @@ export default function Hero() {
             <Item key={index} $url={wod.img}>
               <ContBox>
                 <WodInfo>
-                  {/* <Column>
-                    <Label>PHOTO</Label>
-                    <ItemImgBox>
-                      <Img src={wod.img} alt={wod.name} />
-                    </ItemImgBox>
-                  </Column> */}
                   <Column>
                     <Label>WODNAME</Label>
                     <Name>{wod.name}</Name>
@@ -183,14 +165,6 @@ const WodInfo = styled.div`
     grid-template-columns: repeat(2, 1fr);
   }
 `;
-// const StoryBox = styled.div`
-//   width: calc(100% - 100px);
-//   ${Text} {
-//     font-size: ${({ theme }) => theme.fontSize.sm};
-//     word-break: keep-all;
-//     line-height: 1.3;
-//   }
-// `;
 
 const WodList = styled.ul`
   padding: 1rem;
