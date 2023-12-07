@@ -179,7 +179,7 @@ const WodList = styled.ul`
 `;
 
 const TotalList = styled.p`
-  padding: 0.5rem;
+  padding: 0.5rem 1rem;
   font-size: ${theme.fontSize.md};
   font-weight: ${theme.fontWeight.bold};
 `;

@@ -196,11 +196,67 @@
   },
   {
     "gender": "M",
-    "name": "ERIN",
-    "img": "https://www.crossfit.com/wp-content/uploads/2020/07/02182042/Erin.jpg",
+    "name": "MR. JOSHUA",
+    "img": "https://www.crossfit.com/wp-content/uploads/2020/07/02182040/MrJoshua-300x320.jpg",
     "rounds": "5",
     "time": "For Time",
-    "workout": ["40 pound Dumbbells split clean, 15 reps", "21 Pull-ups"],
+    "workout": [
+      "Run 400 meters",
+      "30 Glute-ham sit-ups",
+      "250 pound Deadlift, 15 reps"
+    ],
+    "story": "-",
+    "startDay": "-"
+  },
+  {
+    "gender": "M",
+    "name": "DT",
+    "img": "https://www.crossfit.com/wp-content/uploads/2020/07/02182038/DT-510x768.jpg",
+    "rounds": "5",
+    "time": "For Time",
+    "workout": [
+      "155 pound Deadlift, 12 reps",
+      "155 pound Hang power clean, 9 reps",
+      "155 pound Push jerk, 6 reps"
+    ],
+    "story": "-",
+    "startDay": "-"
+  },
+  {
+    "gender": "M",
+    "name": "DANNY",
+    "img": "https://www.crossfit.com/wp-content/uploads/2020/07/02182036/Danny.jpg",
+    "rounds": "Max",
+    "time": "20 Min",
+    "workout": [
+      "24 inch Box Jump, 30 reps",
+      "115 pound Push Press, 20 reps",
+      "30 Pull-ups"
+    ],
+    "story": "-",
+    "startDay": "-"
+  },
+  {
+    "gender": "M",
+    "name": "HANSEN",
+    "img": "https://www.crossfit.com/wp-content/uploads/2020/07/02182034/Hansen-300x278.jpg",
+    "rounds": "5",
+    "time": "For Time",
+    "workout": [
+      "2 pood Kettlebell swing, 30 reps",
+      "30 Burpees",
+      "30 Glute-ham sit-ups"
+    ],
+    "story": "-",
+    "startDay": "-"
+  },
+  {
+    "gender": "M",
+    "name": "HANSEN",
+    "img": "https://www.crossfit.com/wp-content/uploads/2020/07/02182032/Tyler-300x225.jpg",
+    "rounds": "5",
+    "time": "For Time",
+    "workout": ["7 Muscle-ups", "95 pound Sumo-deadlift high-pull, 21 reps"],
     "story": "-",
     "startDay": "-"
   }
