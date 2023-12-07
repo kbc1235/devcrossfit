@@ -21,7 +21,8 @@ export default function Maps() {
           let container = document.getElementById("map");
           let options = {
             center: new window.kakao.maps.LatLng(latitude, longitude),
-            level: 2,
+            level: 5,
+            raggable: false,
           };
 
           let map = new window.kakao.maps.Map(container, options);
@@ -81,13 +82,12 @@ export default function Maps() {
       // Handle lack of geolocation support
     }
   }, []);
-  console.log(marker);
   return (
     <MapBox>
       <Map id="map" />
       <ResultList>
-        {marker?.map((item: any) => (
-          <ResultItem>{item.place_name}</ResultItem>
+        {marker?.map((item: any, index: number) => (
+          <ResultItem key={index}>{item.place_name}</ResultItem>
         ))}
       </ResultList>
     </MapBox>
@@ -95,11 +95,22 @@ export default function Maps() {
 }
 const MapBox = styled.div`
   width: 100vw;
-  height: 300px;
+
+  position: relative;
+  &::before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+  }
 `;
 const Map = styled.div`
   width: 100%;
-  height: 100%;
+  height: 300px;
 `;
 
 const ResultList = styled.ul`
