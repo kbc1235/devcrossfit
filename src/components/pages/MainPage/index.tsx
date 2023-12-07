@@ -20,7 +20,7 @@ export default function Main() {
           <MainButton onClick={() => navigate("/hero")} />
         </MainCont>
         <MainCont>
-          <MainTitle>CROSSFIT</MainTitle>
+          <MainTitle>내 주변 박스 찾기</MainTitle>
           <MainButton onClick={() => navigate("/crossfit")} />
         </MainCont>
       </MainWrapper>

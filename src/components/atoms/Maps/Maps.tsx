@@ -10,8 +10,7 @@ declare global {
 }
 
 export default function Maps() {
-  const [marker, setMarker] = useState<any>([]);
-
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -28,15 +27,13 @@ export default function Maps() {
 
           let map = new window.kakao.maps.Map(container, options);
 
-          // Search for places nearby based on a keyword (e.g., 'coffee')
-          const keyword = "크로스핏"; // Replace with your desired keyword
+          const keyword = "크로스핏";
           const places = new window.kakao.maps.services.Places();
 
           places.keywordSearch(
             keyword,
             (result: any, status: any) => {
               if (status === window.kakao.maps.services.Status.OK) {
-                setMarker(result);
                 for (let i = 0; i < result.length; i++) {
                   const placePosition = new window.kakao.maps.LatLng(
                     result[i].y,
@@ -72,6 +69,8 @@ export default function Maps() {
 
                   markerOverlay.setMap(map);
                 }
+
+                setIsLoading(true);
               } else {
                 console.error("Failed to search for places:", status);
               }
@@ -84,22 +83,17 @@ export default function Maps() {
         },
         (error) => {
           console.error("Error getting the user's location:", error);
-          // You can handle errors here
         }
       );
     } else {
       console.error("Geolocation is not supported by this browser.");
-      // Handle lack of geolocation support
     }
   }, []);
   return (
     <MapBox>
-      <Map id="map" />
-      <ResultList>
-        {marker?.map((item: any, index: number) => (
-          <ResultItem key={index}>{item.place_name}</ResultItem>
-        ))}
-      </ResultList>
+      <Map id="map">
+        {!isLoading && <Loading>내 주변 박스 찾는중...</Loading>}
+      </Map>
     </MapBox>
   );
 }
@@ -114,7 +108,7 @@ const MapBox = styled.div`
 `;
 const Map = styled.div`
   width: 100%;
-  height: 300px;
+  height: 500px;
   border-radius: 8px;
   position: relative;
   &::before {
@@ -127,33 +121,28 @@ const Map = styled.div`
     left: 0;
     z-index: 100;
   }
-`;
-
-const ResultList = styled.ul`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  width: 100%;
-  min-height: 300px;
-  padding: 1rem;
-  gap: 1rem;
-  overflow: auto;
-  background: ${theme.colors.opacityMain};
   @media (max-width: ${theme.deviceSize.tablet}) {
-    grid-template-columns: repeat(2, 1fr);
+    height: 300px;
   }
 `;
 
-const ResultItem = styled.li`
-  font-size: ${theme.fontSize.sm};
+const Loading = styled.div`
+  ${theme.common.flexCenter}
+  width: 100%;
+  height: 500px;
+  border-radius: 8px;
   position: relative;
-  padding-left: 1rem;
-  &::before {
-    content: "C.";
+  border: 1px solid ${theme.colors.white};
+  font-size: ${theme.fontSize.xl};
+  font-weight: ${theme.fontWeight.bold};
+  @media (max-width: ${theme.deviceSize.tablet}) {
+    height: 300px;
   }
 `;
+
 const Marker = styled.p`
   margin-top: 0.2rem;
-  font-size: ${theme.fontSize.sm};
+  font-size: 12px;
 `;
 
 const MarkerBox = styled.div`
