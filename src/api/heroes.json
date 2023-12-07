@@ -193,5 +193,15 @@
     "workout": ["40 pound Dumbbells split clean, 15 reps", "21 Pull-ups"],
     "story": "-",
     "startDay": "-"
+  },
+  {
+    "gender": "M",
+    "name": "ERIN",
+    "img": "https://www.crossfit.com/wp-content/uploads/2020/07/02182042/Erin.jpg",
+    "rounds": "5",
+    "time": "For Time",
+    "workout": ["40 pound Dumbbells split clean, 15 reps", "21 Pull-ups"],
+    "story": "-",
+    "startDay": "-"
   }
 ]
