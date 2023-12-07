@@ -21,6 +21,7 @@ export default function Main() {
         </MainCont>
         <MainCont>
           <MainTitle>CROSSFIT</MainTitle>
+          <MainButton onClick={() => navigate("/crossfit")} />
         </MainCont>
       </MainWrapper>
     </Layout>

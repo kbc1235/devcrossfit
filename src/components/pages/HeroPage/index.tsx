@@ -29,7 +29,7 @@ export default function Hero() {
   }, [genderFilter]);
 
   return (
-    <Layout title={"HERO WOD"} backBtn>
+    <Layout title={"히어로 와드"} backBtn>
       <Select value={genderFilter} setValue={setGenterFilter} />
       <TotalList>Total : {total}</TotalList>
       <WodList>
