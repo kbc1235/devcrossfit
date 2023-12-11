@@ -11,28 +11,11 @@ export default function BasicPage() {
     <Layout title={"알짜정보"} backBtn>
       <SubSection>
         <SubBox>
-          <SubBtn onClick={() => navigate("/terminology")}>
-            크로스핏 용어
-          </SubBtn>
+          <SubBtn onClick={() => navigate("/term")}>크로스핏 용어</SubBtn>
         </SubBox>
         <SubBox>
-          <SubBtn onClick={() => navigate("/terminology")}>
-            크로스핏 용어
-          </SubBtn>
-        </SubBox>
-        <SubBox>
-          <SubBtn onClick={() => navigate("/terminology")}>
-            크로스핏 용어
-          </SubBtn>
-        </SubBox>
-        <SubBox>
-          <SubBtn onClick={() => navigate("/terminology")}>
-            크로스핏 용어
-          </SubBtn>
-        </SubBox>
-        <SubBox>
-          <SubBtn onClick={() => navigate("/terminology")}>
-            크로스핏 용어
+          <SubBtn onClick={() => navigate("/")} disabled>
+            준비중
           </SubBtn>
         </SubBox>
       </SubSection>

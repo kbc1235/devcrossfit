@@ -9,6 +9,12 @@ export type Wod = {
   startDay: string;
 };
 
+export type Terms = {
+  type: string;
+  name: string;
+  meaning: string;
+};
+
 export type SVGPropsInterface = {
   width?: string | number;
   height?: string | number;

@@ -9,9 +9,10 @@ type Props = {
   value: string;
   setValue: (value: string) => void;
   onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  text: string[];
 };
 
-export default function Select({ value, setValue }: Props) {
+export default function Select({ text, value, setValue }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const selectValue = (value: string) => {
     setIsOpen(false);
@@ -29,21 +30,15 @@ export default function Select({ value, setValue }: Props) {
       </SelectValue>
       {isOpen && (
         <SelectList>
-          <SelectItem>
-            <SelectItemButton onClick={() => selectValue("ALL")}>
-              ALL
-            </SelectItemButton>
-          </SelectItem>
-          <SelectItem>
-            <SelectItemButton onClick={() => selectValue("M")}>
-              M
-            </SelectItemButton>
-          </SelectItem>
-          <SelectItem>
-            <SelectItemButton onClick={() => selectValue("F")}>
-              F
-            </SelectItemButton>
-          </SelectItem>
+          {text.map((item, index) => {
+            return (
+              <SelectItem key={index}>
+                <SelectItemButton onClick={() => selectValue(item)}>
+                  {item}
+                </SelectItemButton>
+              </SelectItem>
+            );
+          })}
         </SelectList>
       )}
     </SelectWrapper>
@@ -51,8 +46,8 @@ export default function Select({ value, setValue }: Props) {
 }
 const SelectValue = styled.div`
   ${theme.common.flexCenter}
-  width: 100%;
-  max-width: 70px;
+  display: inline-flex;
+  min-width: 70px;
   padding: 0.5rem;
   border-radius: 5px;
   background: ${({ theme }) => theme.colors.white};

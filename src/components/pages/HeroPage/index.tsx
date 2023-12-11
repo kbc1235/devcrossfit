@@ -13,6 +13,7 @@ import WodData from ".././../../api/heroes.json";
 
 export default function Hero() {
   const [data, setData] = useState<Wod[]>([]);
+  const filterText = ["ALL", "M", "W"];
   const [total, setTotal] = useState<number>(0);
   const [genderFilter, setGenterFilter] = useState<string>("ALL");
 
@@ -30,7 +31,11 @@ export default function Hero() {
 
   return (
     <Layout title={"히어로 와드"} backBtn>
-      <Select value={genderFilter} setValue={setGenterFilter} />
+      <Select
+        value={genderFilter}
+        setValue={setGenterFilter}
+        text={filterText}
+      />
       <TotalList>Total : {total}</TotalList>
       <WodList>
         {data?.map((wod, index) => {
