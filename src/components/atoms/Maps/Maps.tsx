@@ -43,8 +43,15 @@ export default function Maps() {
                     position: placePosition,
                     content: ReactDOMServer.renderToString(
                       <MarkerBox>
-                        <CrossfitText width={50} fill={theme.colors.red} />
-                        <Marker>{result[i].place_name}</Marker>
+                        <Marker />
+                        <MarkerText>
+                          <CrossfitText width={50} fill={theme.colors.red} />
+                          <Text>
+                            {result[i].place_name === "크로스핏메이커스"
+                              ? "🌟" + result[i].place_name + "🌟"
+                              : result[i].place_name}
+                          </Text>
+                        </MarkerText>
                       </MarkerBox>
                     ),
                   });
@@ -111,16 +118,6 @@ const Map = styled.div`
   height: 500px;
   border-radius: 8px;
   position: relative;
-  &::before {
-    content: "";
-    display: block;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 100;
-  }
   @media (max-width: ${theme.deviceSize.tablet}) {
     height: 300px;
   }
@@ -141,13 +138,54 @@ const Loading = styled.div`
 `;
 
 const Marker = styled.p`
-  margin-top: 0.2rem;
-  font-size: 12px;
+  width: 30px;
+  height: 39px;
+  position: relative;
+  &::before {
+    content: "C";
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    background: ${theme.colors.main};
+    border-radius: 50%;
+    font-size: ${theme.fontSize.sm};
+    font-weight: ${theme.fontWeight.bold};
+    text-shadow: 1px 1px 2px ${theme.colors.red};
+  }
+
+  &::after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    border-top: 10px solid ${theme.colors.main};
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+`;
+const MarkerText = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  position: absolute;
+  width: auto;
+  top: 0;
+  left: 36px;
+  padding: 0.5rem 0.8rem;
+  border-radius: 8px;
+  background-color: ${theme.colors.main};
+`;
+
+const Text = styled.p`
+  font-size: ${theme.fontSize.xs};
 `;
 
 const MarkerBox = styled.div`
-  width: auto;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  background-color: ${theme.colors.main};
+  position: relative;
 `;

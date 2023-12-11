@@ -5,6 +5,7 @@ const fontSize = {
   lg: pixelToRem(20),
   md: pixelToRem(16),
   sm: pixelToRem(14),
+  xs: pixelToRem(12),
 };
 
 const fontWeight = {
