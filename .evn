@@ -1,0 +1,2 @@
+DATABASE_URL='mysql://feil9evr2b10hb94qbsh:************@gcp.connect.psdb.cloud/crossfit?ssl={"rejectUnauthorized":true}'
+  
