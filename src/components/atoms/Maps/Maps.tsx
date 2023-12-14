@@ -2,7 +2,6 @@ import ReactDOMServer from "react-dom/server";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import theme from "../../../styles/theme";
-import CrossfitText from "../../../assets/svg/crossfit";
 declare global {
   interface Window {
     kakao: any;
@@ -10,6 +9,7 @@ declare global {
 }
 
 const { kakao } = window;
+
 const KEYWORD_LIST = [
   { id: 1, keyword: "크로스핏", emoji: "🏋️‍♂️" },
   { id: 2, keyword: "클라이밍", emoji: "🧗‍♂️" },
@@ -19,7 +19,10 @@ const KEYWORD_LIST = [
 
 export default function Maps() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [selectKeyword, setSelectKeyword] = useState<string>("크로스핏");
+  const [selectKeyword, setSelectKeyword] = useState({
+    keyword: "크로스핏",
+    emoji: "🏋️‍♂️",
+  });
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -49,7 +52,7 @@ export default function Maps() {
           myMarkerOverlay.setMap(map);
 
           // 키워드로 장소를 검색합니다 ------------------------------
-          const keyword = selectKeyword;
+          const keyword = selectKeyword.keyword;
           const places = new kakao.maps.services.Places();
 
           // 키워드로 장소를 검색합니다
@@ -71,7 +74,7 @@ export default function Maps() {
                       <MarkerBox>
                         <Marker />
                         <MarkerText>
-                          <CrossfitText width={50} fill={theme.colors.red} />
+                          <PointText>{`${selectKeyword.keyword}${selectKeyword.emoji}`}</PointText>
                           <Text>
                             {result[i].place_name === "크로스핏메이커스"
                               ? "🌟" + result[i].place_name + "🌟"
@@ -110,12 +113,18 @@ export default function Maps() {
       <Map id="map">
         <KeywordList>
           {KEYWORD_LIST.map((item) => {
+            console.log(item);
             return (
               <KeywordItem key={item.id}>
                 <KeywordButton
-                  className={selectKeyword === item.keyword ? "active" : ""}
+                  className={
+                    selectKeyword.keyword === item.keyword ? "active" : ""
+                  }
                   onClick={() => {
-                    setSelectKeyword(item.keyword);
+                    setSelectKeyword({
+                      keyword: item.keyword,
+                      emoji: item.emoji,
+                    });
                   }}
                 >
                   {item.emoji} {item.keyword}
@@ -124,11 +133,14 @@ export default function Maps() {
             );
           })}
         </KeywordList>
-        {!isLoading && <Loading>내 주변 박스 찾는중...</Loading>}
+        {!isLoading && (
+          <Loading>내 주변 {selectKeyword.keyword} 찾는중...</Loading>
+        )}
       </Map>
     </MapBox>
   );
 }
+
 const KeywordList = styled.ul`
   position: absolute;
   top: 1rem;
@@ -259,4 +271,10 @@ const Text = styled.p`
 
 const MarkerBox = styled.div`
   position: relative;
+`;
+
+const PointText = styled(Text)`
+  font-size: ${theme.fontSize.sm};
+  font-weight: ${theme.fontWeight.bold};
+  color: ${theme.colors.red};
 `;
