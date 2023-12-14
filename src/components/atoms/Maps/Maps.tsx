@@ -149,10 +149,14 @@ const KeywordList = styled.ul`
 `;
 
 const KeywordItem = styled.li`
-  display: inline-block;
-  margin-right: 0.5rem;
+  display: flex;
+  align-items: center;
+  & + & {
+    margin-top: 0.5rem;
+  }
 `;
 const KeywordButton = styled.button`
+  width: 100%;
   padding: 0.5rem;
   border-radius: 5px;
   background: ${theme.colors.white};
