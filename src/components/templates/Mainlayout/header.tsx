@@ -68,7 +68,7 @@ const UserImgBox = styled.div`
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: ${({ theme }) => theme.colors.sub};
+  background: ${theme.colors.sub};
   overflow: hidden;
 `;
 const UserImg = styled.img`
@@ -78,17 +78,17 @@ const UserImg = styled.img`
 `;
 
 const UserComment = styled.div`
-  font-size: ${({ theme }) => theme.fontSize.sm};
-  font-weight: ${({ theme }) => theme.fontWeight.light};
+  font-size: ${theme.fontSize.sm};
+  font-weight: ${theme.fontWeight.light};
 `;
 const UserName = styled.div`
-  font-size: ${({ theme }) => theme.fontSize.lg};
-  font-weight: ${({ theme }) => theme.fontWeight.bold};
+  font-size: ${theme.fontSize.lg};
+  font-weight: ${theme.fontWeight.bold};
 `;
 const UserDate = styled.div`
   margin-top: 0.5rem;
-  font-size: ${({ theme }) => theme.fontSize.sm};
-  font-weight: ${({ theme }) => theme.fontWeight.light};
+  font-size: ${theme.fontSize.sm};
+  font-weight: ${theme.fontWeight.light};
 `;
 
 const UserInfo = styled.div`
@@ -101,9 +101,9 @@ const UserInfo = styled.div`
 
 const NotLogin = styled.div`
   width: 100%;
-  padding: 0 2.5rem;
-  font-size: ${({ theme }) => theme.fontSize.xl};
-  font-weight: ${({ theme }) => theme.fontWeight.bold};
+  padding: 0 1rem;
+  font-size: ${theme.fontSize.xl};
+  font-weight: ${theme.fontWeight.bold};
   line-height: 1.5;
 `;
 

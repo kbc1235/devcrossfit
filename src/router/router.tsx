@@ -10,9 +10,9 @@ export const Router: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Main />} />
+        <Route path="/crossfit" element={<Main />} />
         <Route path="/hero" element={<Hero />} />
-        <Route path="/crossfit" element={<CrossfitMain />} />
+        <Route path="/" element={<CrossfitMain />} />
         <Route path="/crossfitbasic" element={<BasicPage />} />
         <Route path="/term" element={<TerminologyPage />} />"
       </Routes>

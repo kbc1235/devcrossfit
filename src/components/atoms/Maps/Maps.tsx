@@ -9,8 +9,18 @@ declare global {
   }
 }
 
+const { kakao } = window;
+const KEYWORD_LIST = [
+  { id: 1, keyword: "크로스핏", emoji: "🏋️‍♂️" },
+  { id: 2, keyword: "클라이밍", emoji: "🧗‍♂️" },
+  { id: 3, keyword: "필라테스", emoji: "🧘‍♂️" },
+  { id: 4, keyword: "스키샵", emoji: "🏂" },
+];
+
 export default function Maps() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [selectKeyword, setSelectKeyword] = useState<string>("크로스핏");
+
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -20,26 +30,42 @@ export default function Maps() {
 
           let container = document.getElementById("map");
           let options = {
-            center: new window.kakao.maps.LatLng(latitude, longitude),
-            level: 6,
+            center: new kakao.maps.LatLng(latitude, longitude),
+            level: 4,
             raggable: false,
           };
 
-          let map = new window.kakao.maps.Map(container, options);
+          let map = new kakao.maps.Map(container, options);
 
-          const keyword = "크로스핏";
-          const places = new window.kakao.maps.services.Places();
+          const currentPosition = new kakao.maps.LatLng(latitude, longitude);
 
+          // 현위치 마커
+          const myMarkerOverlay = new kakao.maps.CustomOverlay({
+            position: currentPosition,
+            content: ReactDOMServer.renderToString(<MyMarker />),
+          });
+
+          // 지도 중심좌표를 접속위치로 변경합니다
+          myMarkerOverlay.setMap(map);
+
+          // 키워드로 장소를 검색합니다 ------------------------------
+          const keyword = selectKeyword;
+          const places = new kakao.maps.services.Places();
+
+          // 키워드로 장소를 검색합니다
           places.keywordSearch(
             keyword,
             (result: any, status: any) => {
-              if (status === window.kakao.maps.services.Status.OK) {
+              if (status === kakao.maps.services.Status.OK) {
+                // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
                 for (let i = 0; i < result.length; i++) {
-                  const placePosition = new window.kakao.maps.LatLng(
+                  const placePosition = new kakao.maps.LatLng(
                     result[i].y,
                     result[i].x
                   );
-                  const markerOverlay = new window.kakao.maps.CustomOverlay({
+
+                  // 키워드 마커를 생성합니다
+                  const markerOverlay = new kakao.maps.CustomOverlay({
                     position: placePosition,
                     content: ReactDOMServer.renderToString(
                       <MarkerBox>
@@ -56,24 +82,6 @@ export default function Maps() {
                     ),
                   });
 
-                  // Create a marker with the custom image
-                  const marker = new window.kakao.maps.Marker({
-                    position: placePosition,
-                  });
-
-                  // Add a click event to the marker to display place info
-                  window.kakao.maps.event.addListener(
-                    marker,
-                    "click",
-                    function () {
-                      const infowindow = new window.kakao.maps.InfoWindow({
-                        content: `<div style="padding:10px;">${result[i].place_name}</div>`, // Customize content as needed
-                        //   content: <Marker>${result[i].place_name}</Marker>,
-                      });
-                      infowindow.open(map, marker);
-                    }
-                  );
-
                   markerOverlay.setMap(map);
                 }
 
@@ -83,8 +91,9 @@ export default function Maps() {
               }
             },
             {
-              location: new window.kakao.maps.LatLng(latitude, longitude),
-              radius: 10000,
+              // 검색결과 10개만 보여주도록 설정
+              location: new kakao.maps.LatLng(latitude, longitude),
+              radius: 10000, // 10km
             }
           );
         },
@@ -95,46 +104,108 @@ export default function Maps() {
     } else {
       console.error("Geolocation is not supported by this browser.");
     }
-  }, []);
+  }, [selectKeyword]);
   return (
     <MapBox>
       <Map id="map">
+        <KeywordList>
+          {KEYWORD_LIST.map((item) => {
+            return (
+              <KeywordItem key={item.id}>
+                <KeywordButton
+                  className={selectKeyword === item.keyword ? "active" : ""}
+                  onClick={() => {
+                    setSelectKeyword(item.keyword);
+                  }}
+                >
+                  {item.emoji} {item.keyword}
+                </KeywordButton>
+              </KeywordItem>
+            );
+          })}
+        </KeywordList>
         {!isLoading && <Loading>내 주변 박스 찾는중...</Loading>}
       </Map>
     </MapBox>
   );
 }
+const KeywordList = styled.ul`
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1000;
+`;
+
+const KeywordItem = styled.li`
+  display: inline-block;
+  margin-right: 0.5rem;
+`;
+const KeywordButton = styled.button`
+  padding: 0.5rem;
+  border-radius: 5px;
+  background: ${theme.colors.white};
+  color: ${theme.colors.main};
+  font-size: ${theme.fontSize.sm};
+  border: 1px solid ${theme.colors.main};
+  &.active {
+    background: ${theme.colors.main};
+    color: ${theme.colors.white};
+    border: 1px solid ${theme.colors.red};
+  }
+  &:active,
+  &:focus,
+  &:hover {
+    background: ${theme.colors.main};
+    color: ${theme.colors.white};
+  }
+`;
+
+const MyMarker = styled.div`
+  width: 20px;
+  height: 20px;
+  position: relative;
+  background: ${theme.colors.main};
+  border-radius: 50%;
+  filter: drop-shadow(0px 0px 2px ${theme.colors.red});
+  &::before {
+    content: "this";
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: ${theme.colors.blue};
+    width: 50%;
+    height: 50%;
+    border-radius: 50%;
+    color: ${theme.colors.main};
+    z-index: 1000;
+  }
+`;
+
 const MapBox = styled.div`
   width: 100vw;
+  height: calc(100vh - 74px);
   padding: 1rem;
-  display: flex;
-
-  @media (max-width: ${theme.deviceSize.tablet}) {
-    display: block;
-  }
+  display: block;
 `;
 const Map = styled.div`
   width: 100%;
-  height: 500px;
+  height: 100%;
   border-radius: 8px;
   position: relative;
-  @media (max-width: ${theme.deviceSize.tablet}) {
-    height: 300px;
-  }
 `;
 
 const Loading = styled.div`
   ${theme.common.flexCenter}
   width: 100%;
-  height: 500px;
+  height: 100%;
   border-radius: 8px;
   position: relative;
   border: 1px solid ${theme.colors.white};
   font-size: ${theme.fontSize.xl};
   font-weight: ${theme.fontWeight.bold};
-  @media (max-width: ${theme.deviceSize.tablet}) {
-    height: 300px;
-  }
 `;
 
 const Marker = styled.p`
