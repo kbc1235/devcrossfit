@@ -136,10 +136,24 @@ export default function Maps() {
         {!isLoading && (
           <Loading>내 주변 {selectKeyword.keyword} 찾는중...</Loading>
         )}
+        <Notification>주변 10km만 표시 됩니다.</Notification>
       </Map>
     </MapBox>
   );
 }
+
+const Notification = styled.p`
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  border-radius: 5px;
+  padding: 0.5rem;
+  z-index: 1000;
+  color: ${theme.colors.white};
+  font-size: ${theme.fontSize.sm};
+  font-weight: ${theme.fontWeight.bold};
+  background: ${theme.colors.main};
+`;
 
 const KeywordList = styled.ul`
   position: absolute;
