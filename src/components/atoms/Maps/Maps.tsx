@@ -2,6 +2,8 @@ import ReactDOMServer from "react-dom/server";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import theme from "../../../styles/theme";
+import ArrowDown from "../../../assets/svg/arrowDown";
+import ArrowUp from "../../../assets/svg/arrowUp";
 declare global {
   interface Window {
     kakao: any;
@@ -19,6 +21,7 @@ const KEYWORD_LIST = [
 
 export default function Maps() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selectKeyword, setSelectKeyword] = useState({
     keyword: "크로스핏",
     emoji: "🏋️‍♂️",
@@ -111,28 +114,49 @@ export default function Maps() {
   return (
     <MapBox>
       <Map id="map">
-        <KeywordList>
-          {KEYWORD_LIST.map((item) => {
-            console.log(item);
-            return (
-              <KeywordItem key={item.id}>
-                <KeywordButton
-                  className={
-                    selectKeyword.keyword === item.keyword ? "active" : ""
-                  }
-                  onClick={() => {
-                    setSelectKeyword({
-                      keyword: item.keyword,
-                      emoji: item.emoji,
-                    });
-                  }}
-                >
-                  {item.emoji} {item.keyword}
-                </KeywordButton>
-              </KeywordItem>
-            );
-          })}
-        </KeywordList>
+        <Select>
+          <SelectOpenBtn
+            className={isOpen ? "active" : ""}
+            onClick={() => {
+              setIsOpen(!isOpen);
+            }}
+          >
+            {isOpen}
+            {selectKeyword.emoji}
+            {selectKeyword.keyword}
+            {isOpen ? (
+              <ArrowUp width={23} height={23} fill={theme.colors.red} />
+            ) : (
+              <ArrowDown width={23} height={23} fill={theme.colors.red} />
+            )}
+          </SelectOpenBtn>
+        </Select>
+        {isOpen && (
+          <KeywordList>
+            {KEYWORD_LIST.map((item) => {
+              return (
+                <KeywordItem key={item.id}>
+                  <KeywordButton
+                    className={
+                      selectKeyword.keyword === item.keyword ? "active" : ""
+                    }
+                    onClick={() => {
+                      setSelectKeyword({
+                        keyword: item.keyword,
+                        emoji: item.emoji,
+                      });
+                      setIsLoading(false);
+                      setIsOpen(false);
+                    }}
+                  >
+                    {item.emoji} {item.keyword}
+                  </KeywordButton>
+                </KeywordItem>
+              );
+            })}
+          </KeywordList>
+        )}
+
         {!isLoading && (
           <Loading>내 주변 {selectKeyword.keyword} 찾는중...</Loading>
         )}
@@ -141,7 +165,12 @@ export default function Maps() {
     </MapBox>
   );
 }
-
+const Select = styled.div`
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1000;
+`;
 const Notification = styled.p`
   position: absolute;
   bottom: 1rem;
@@ -157,7 +186,7 @@ const Notification = styled.p`
 
 const KeywordList = styled.ul`
   position: absolute;
-  top: 1rem;
+  top: 4rem;
   left: 1rem;
   z-index: 1000;
 `;
@@ -183,7 +212,29 @@ const KeywordButton = styled.button`
     border: 1px solid ${theme.colors.red};
   }
   &:active,
-  &:focus,
+  &:hover {
+    background: ${theme.colors.main};
+    color: ${theme.colors.white};
+  }
+`;
+
+const SelectOpenBtn = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 5px;
+  background: ${theme.colors.white};
+  color: ${theme.colors.main};
+  font-size: ${theme.fontSize.sm};
+  border: 1px solid ${theme.colors.main};
+  &.active {
+    background: ${theme.colors.main};
+    color: ${theme.colors.white};
+    border: 1px solid ${theme.colors.red};
+  }
+  &:active,
   &:hover {
     background: ${theme.colors.main};
     color: ${theme.colors.white};
