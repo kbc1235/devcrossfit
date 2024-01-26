@@ -28,3 +28,5 @@ export type ChildrenProps = {
 export type ButtonProps = {
   $type?: "button" | "submit" | "reset";
 };
+
+export type PalworldData = {};

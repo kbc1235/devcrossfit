@@ -5,6 +5,7 @@ import Hero from "../components/pages/HeroPage";
 import CrossfitMain from "../components/pages/CrossfitPage";
 import BasicPage from "../components/pages/BasicPage/";
 import TerminologyPage from "../components/pages/Terminology";
+import PalWorldPage from "../components/pages/Palworld";
 
 export const Router: React.FC = () => {
   return (
@@ -15,6 +16,7 @@ export const Router: React.FC = () => {
         <Route path="/" element={<CrossfitMain />} />
         <Route path="/crossfitbasic" element={<BasicPage />} />
         <Route path="/term" element={<TerminologyPage />} />"
+        <Route path="/palworld" element={<PalWorldPage />} />"
       </Routes>
     </BrowserRouter>
   );
