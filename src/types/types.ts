@@ -29,4 +29,30 @@ export type ButtonProps = {
   $type?: "button" | "submit" | "reset";
 };
 
-export type PalworldData = {};
+export type PalworldData = {
+  item: {
+    key?: string;
+    name?: string;
+    image?: string;
+    imageWiki?: string;
+    types: [];
+    description?: string;
+    aura: {
+      name?: string;
+      description?: string;
+    };
+    discription?: string;
+    suitability?: {
+      map(
+        arg0: (
+          suitability: { type: string; level: string },
+          index: number
+        ) => import("react/jsx-runtime").JSX.Element
+      ): import("react").ReactNode;
+      type?: string;
+      level?: string;
+    };
+    drops?: string[];
+  };
+  index?: number;
+};

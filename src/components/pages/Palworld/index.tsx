@@ -4,42 +4,50 @@ import styled from "styled-components";
 import theme from "../../../styles/theme";
 
 import { PalworldData } from "../../../types/types";
-import palworldData from "../../../api/pals.json";
+import Data from "../../../api/pals.json";
+
+type BadgeColorType = {
+  [key: string]: string;
+};
 
 export default function PalWorldPage() {
   const [data, setDate] = useState<PalworldData[]>([]);
   useEffect(() => {
-    setDate(palworldData);
+    setDate(Data);
   }, []);
-  console.log(data);
+
   return (
     <Grid>
-      {data.map((item, index) => {
+      {data.map(({ item, index }: PalworldData) => {
         return (
-          <Item key={item.key}>
+          <Item key={index}>
             <ImagBox>
-              <Img src={item.imageWiki} />
+              <Img src={item?.imageWiki} />
             </ImagBox>
-            <NameBox>{item.aura.name}</NameBox>
+            <NameBox>{item?.aura.name}</NameBox>
             <DropBox>
-              {item.drops.map((drop, index) => {
+              {item?.drops?.map((drop: string, index: number) => {
                 return <DropItem key={index}>{drop}</DropItem>;
               })}
             </DropBox>
 
             <SuitabilityBox>
-              {item.suitability.map((suitability, index) => {
-                return (
-                  <SuitabilityBadge
-                    key={index}
-                    type={suitability.type}
-                    level={suitability.level}
-                  />
-                );
-              })}
+              {item.suitability &&
+                item.suitability?.map(
+                  (
+                    suitability: { type: string; level: string },
+                    index: number
+                  ) => {
+                    return (
+                      <SuitabilityBadge
+                        key={index}
+                        type={suitability.type}
+                        level={suitability.level}
+                      />
+                    );
+                  }
+                )}
             </SuitabilityBox>
-            <div>{item.ability}</div>
-            <div>{item.personality}</div>
             <TypeBox>
               {item.types.map((type, index) => {
                 return <TypeBadge key={index} type={type} />;
@@ -52,8 +60,8 @@ export default function PalWorldPage() {
   );
 }
 
-const TypeBadge = ({ type }) => {
-  const badgeColor = {
+const TypeBadge = ({ type }: { type: string }) => {
+  const badgeColor: BadgeColorType = {
     fire: "#FFA756",
     water: "#58ABF6",
     grass: "#8BBE8A",
@@ -76,8 +84,8 @@ const TypeBadge = ({ type }) => {
   return <Badge style={{ background: badgeColor[type] }} />;
 };
 
-const SuitabilityBadge = ({ type, level }) => {
-  const badgeColor = {
+const SuitabilityBadge = ({ type, level }: { type: string; level: string }) => {
+  const badgeColor: BadgeColorType = {
     handiwork: "#FFA756",
     collection: "#58ABF6",
     battle: "#8BBE8A",
