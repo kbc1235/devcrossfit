@@ -2,10 +2,11 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Main from "../components/pages/MainPage";
 import Hero from "../components/pages/HeroPage";
-import CrossfitMain from "../components/pages/CrossfitPage";
+// import CrossfitMain from "../components/pages/CrossfitPage";
 import BasicPage from "../components/pages/BasicPage/";
 import TerminologyPage from "../components/pages/Terminology";
 import PalWorldPage from "../components/pages/Palworld";
+import DashBoardPage from "../components/pages/DashBoardPage";
 
 export const Router: React.FC = () => {
   return (
@@ -13,10 +14,11 @@ export const Router: React.FC = () => {
       <Routes>
         <Route path="/crossfit" element={<Main />} />
         <Route path="/hero" element={<Hero />} />
-        <Route path="/" element={<CrossfitMain />} />
+        {/* <Route path="/" element={<CrossfitMain />} /> */}
         <Route path="/crossfitbasic" element={<BasicPage />} />
-        <Route path="/term" element={<TerminologyPage />} />"
-        <Route path="/palworld" element={<PalWorldPage />} />"
+        <Route path="/term" element={<TerminologyPage />} />
+        <Route path="/palworld" element={<PalWorldPage />} />
+        <Route path="/" element={<DashBoardPage />} />
       </Routes>
     </BrowserRouter>
   );
