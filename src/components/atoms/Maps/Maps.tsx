@@ -1,7 +1,7 @@
 import { Map, useKakaoLoader } from "react-kakao-maps-sdk";
 export default function Maps() {
   const [loading, error] = useKakaoLoader({
-    appkey: process.env.VITE_APP_KAKAO_API_KEY || "",
+    appkey: import.meta.env.VITE_APP_KAKAO_API_KEY || "",
     libraries: ["services"],
   });
   return (
