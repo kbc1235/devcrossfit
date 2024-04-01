@@ -1,9 +1,5 @@
-import { SVGPropsInterface } from "../../types/types";
-export default function BackBtnIcon({
-  width,
-  height,
-  fill,
-}: SVGPropsInterface) {
+import { SvgProps } from "../../types/types";
+export default function BackBtnIcon({ width, height, fill }: SvgProps) {
   return (
     <svg width={width} height={height} viewBox="0 0 24 24" fill="none">
       <path

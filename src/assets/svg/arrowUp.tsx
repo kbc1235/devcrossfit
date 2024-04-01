@@ -1,6 +1,6 @@
-import { SVGPropsInterface } from "../../types/types";
+import { SvgProps } from "../../types/types";
 
-export default function ArrowUp({ width, height, fill }: SVGPropsInterface) {
+export default function ArrowUp({ width, height, fill }: SvgProps) {
   return (
     <svg
       width={width}
