@@ -1,24 +1,13 @@
 import { createGlobalStyle } from "styled-components";
 import theme from "./theme";
 export const GlobalStyles = createGlobalStyle`
-    @font-face {
-        font-family: 'SUIT';
-        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Light.woff2') format('woff2');
-        font-weight: light;
-    
-    }
-    @font-face {
-        font-family: 'SUIT';
-        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
-        font-weight: normal;
+   @font-face {
+     font-family: 'S-CoreDream-3Light';
+     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+     font-weight: normal;
+     font-style: normal;
+}
 
-    }
-    @font-face {
-        font-family: 'SUIT';
-        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Bold.woff2') format('woff2');
-        font-weight: bold;
-
-    }
      a{
         text-decoration: none;
         color: inherit;
@@ -33,12 +22,13 @@ export const GlobalStyles = createGlobalStyle`
         border: 0;
         font-size: 16px;
         vertical-align: baseline;
-        font-family: 'SUIT';
-        line-height: 1;
+        font-family: 'S-CoreDream-3Light';
+        line-height: 1.5;
+        color: ${theme.colors.white};
     }
     body{
         line-height: 1;
-        font-family: 'SUIT', sans-serif;
+        font-family: 'S-CoreDream-3Light', sans-serif;
     }
     ol, ul{
         list-style: none;

@@ -6,7 +6,7 @@ export default function Button({
   onClick,
 }: {
   children: React.ReactNode;
-  onClick: () => void;
+  onClick?: () => void;
   type?: "button" | "submit" | "reset" | "text";
 }) {
   return (
