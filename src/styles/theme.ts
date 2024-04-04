@@ -15,15 +15,10 @@ const fontWeight = {
 };
 
 const colors = {
-  main: "#1f242b",
-  opacityMain: "#1f242bc9",
-  sub: "#6b87a0",
-  sub2: "#494f55",
-  red: "#f91941",
-  blue: "#0046ff",
-  white: "#fafcfc",
-  opacityRed: "rgba(249, 25, 65, 0.3)",
-  opacityBlue: "rgba(0, 70, 255, 0.3)",
+  main: "#222831",
+  sub: "#393E46",
+  sub2: "#00ADB5",
+  white: "#EEEEEE",
 };
 
 const common = {

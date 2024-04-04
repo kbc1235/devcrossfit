@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import theme from "../styles/theme";
 
 export default function Container({ children }: { children: React.ReactNode }) {
   return <LayoutContainer>{children}</LayoutContainer>;
@@ -7,5 +8,5 @@ export default function Container({ children }: { children: React.ReactNode }) {
 const LayoutContainer = styled.div`
   width: 100vw;
   height: 100vh;
-  background: #212121;
+  background: ${theme.colors.main};
 `;
