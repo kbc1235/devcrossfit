@@ -127,7 +127,7 @@ const AddressModal = ({
       <ModalContent>
         <ModalTitle>박스 검색 결과</ModalTitle>
         <ModalList>
-          {keywordList.map((item: any) => (
+          {keywordList?.map((item: any) => (
             <ModalItem key={item.id}>
               <ItemInfo>
                 <ItemTitle>{item.place_name}</ItemTitle>

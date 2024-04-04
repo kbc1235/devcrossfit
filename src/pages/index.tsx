@@ -51,7 +51,7 @@ export default function Home() {
         </AddBtn>
       </PlaceAdd>
       <PlaceList>
-        {list.map((item) => (
+        {list?.map((item) => (
           <PlaceItem key={item.id}>
             <PlaceName>{item.name}</PlaceName>
           </PlaceItem>
