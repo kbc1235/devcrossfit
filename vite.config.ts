@@ -7,7 +7,7 @@ export default {
     historyApiFallback: true,
     proxy: {
       "/api": {
-        target: "http://localhost:18080",
+        target: "https://devcrossfit.netlify.app/",
         changeOrigin: true,
         rewrite: (path: string) => path.replace(/^\/api/, ""),
       },
