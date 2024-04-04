@@ -9,4 +9,5 @@ const LayoutContainer = styled.div`
   width: 100vw;
   height: 100vh;
   background: ${theme.colors.main};
+  padding: 4rem;
 `;
