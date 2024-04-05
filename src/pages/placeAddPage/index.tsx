@@ -1,7 +1,8 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { doc, addDoc, collection } from "firebase/firestore";
+
 import { db } from "../../firebase";
 
 import styled from "styled-components";
@@ -11,6 +12,7 @@ import Input from "../../components/input";
 import { Btn } from "../../components/button";
 
 import theme from "../../styles/theme";
+import useOutsideClick from "../../hook/useOutsideClick";
 
 export default function PlaceAddPage() {
   const navigate = useNavigate();
@@ -42,7 +44,6 @@ export default function PlaceAddPage() {
   };
 
   const handleAddress = async () => {
-    if (!address) return;
     const res = await axios.get(
       `https://dapi.kakao.com/v2/local/search/keyword.json?query=${address}`,
       {
@@ -63,9 +64,11 @@ export default function PlaceAddPage() {
       <IputWrapper>
         <Input
           type="text"
-          placeholder="박스이름"
-          value={selectedInfo.name}
-          readOnly
+          placeholder="박스 이름을 검색해주세요."
+          onChange={(e) => {
+            setAddress(e.target.value);
+          }}
+          value={address}
         />
         <Input
           type="text"
@@ -77,11 +80,9 @@ export default function PlaceAddPage() {
         />
         <Input
           type="text"
-          placeholder="주소를 입력해주세요"
-          onChange={(e) => {
-            setAddress(e.target.value);
-          }}
-          value={address}
+          placeholder="박스이름"
+          value={selectedInfo.name}
+          readOnly
         />
         <Button
           type="button"
@@ -89,6 +90,7 @@ export default function PlaceAddPage() {
             handleAddress();
             setIsOpen(true);
           }}
+          disabled={!address}
           $caseType="primary"
         >
           주소 검색
@@ -128,11 +130,13 @@ const AddressModal = ({
 }: {
   keywordList: any;
   setSelectedInfo: any;
-  setIsOpen: any;
+  setIsOpen: (value: boolean) => void;
 }) => {
+  const modalRef = useRef<HTMLDivElement>(null);
+  useOutsideClick(modalRef, () => setIsOpen(false));
   return (
     <ModalWrapper>
-      <ModalContent>
+      <ModalContent ref={modalRef}>
         <ModalTitle>박스 검색 결과</ModalTitle>
         <ModalList>
           {keywordList?.map((item: any) => (
@@ -162,6 +166,7 @@ const AddressModal = ({
     </ModalWrapper>
   );
 };
+
 const ModalItem = styled.li`
   & + & {
     border-top: 1px solid ${theme.colors.sub2};
