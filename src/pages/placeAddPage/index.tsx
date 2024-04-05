@@ -166,7 +166,7 @@ const ModalItem = styled.li`
   & + & {
     border-top: 1px solid ${theme.colors.sub2};
   }
-  padding: 10px;
+  padding: 12px;
   display: flex;
   align-items: center;
   gap: 10px;
