@@ -1,13 +1,14 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { doc, addDoc, collection } from "firebase/firestore";
+import { db } from "../../firebase";
 
 import styled from "styled-components";
+import dayjs from "dayjs";
 
 import Input from "../../components/input";
 import { Btn } from "../../components/button";
-
-import { postPlace } from "../../_crud/place";
 
 import theme from "../../styles/theme";
 
@@ -15,22 +16,29 @@ export default function PlaceAddPage() {
   const navigate = useNavigate();
   const [price, setPrice] = useState<string>("");
   const [address, setAddress] = useState<string>("");
-  const [keywordList, setKeywordList] = useState<any>([]);
+  const [keywordList, setKeywordList] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [selectedInfo, setSelectedInfo] = useState<any>({
+  const [selectedInfo, setSelectedInfo] = useState<{
+    name: string;
+    lat: string;
+    lng: string;
+  }>({
     name: "",
     lat: "",
     lng: "",
   });
 
   const handleSubmit = async () => {
-    const res = await postPlace({
+    const placeCollectionRef = collection(db, "place");
+    const newPlaceRef = doc(placeCollectionRef);
+    await addDoc(placeCollectionRef, {
+      id: newPlaceRef.id,
+      createdAt: dayjs().format("YYYY-MM-DD HH:mm"),
       name: selectedInfo.name,
       price: price,
       lat: selectedInfo.lat,
       lng: selectedInfo.lng,
     });
-    console.log(res);
   };
 
   const handleAddress = async () => {
@@ -139,8 +147,8 @@ const AddressModal = ({
                 onClick={() => {
                   setSelectedInfo({
                     name: item.place_name,
-                    lat: item.x,
-                    lng: item.y,
+                    lat: item.y,
+                    lng: item.x,
                   });
                   setIsOpen(false);
                 }}
