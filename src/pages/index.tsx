@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { db } from "../firebase";
+import { collection, getDocs } from "firebase/firestore";
 import styled from "styled-components";
-import { getPlace } from "../_crud/place";
-
 import theme from "../styles/theme";
 import Button, { Btn } from "../components/button";
 
@@ -12,10 +11,9 @@ export default function Home() {
   const [list, setList] = useState<any[]>([]);
 
   const record = async () => {
-    const res = await getPlace();
-    if (res.status === 200) {
-      setList(res.data.list);
-    }
+    const placeCollectionRef = collection(db, "place");
+    const res = await getDocs(placeCollectionRef);
+    setList(res.docs.map((doc) => ({ ...doc.data() })));
   };
 
   useEffect(() => {
