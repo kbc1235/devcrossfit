@@ -274,17 +274,19 @@ const ItemAddress = styled(ItemInfo)`
 `;
 
 const ModalList = styled.ul`
-  height: calc(100% - 50px);
-  overflow-y: auto;
   list-style: none;
   padding: 0;
   margin: 0;
 `;
 
 const ModalTitle = styled.h3`
+  position: sticky;
+  top: 0;
   display: flex;
   align-items: center;
   padding: 10px;
+  background-color: #fff;
+  border-bottom: 1px solid ${theme.colors.white};
   font-size: 20px;
   font-weight: 600;
   color: ${theme.colors.main};
@@ -295,6 +297,7 @@ const ModalContent = styled.div`
   height: 500px;
   background-color: #fff;
   border-radius: 10px;
+  overflow-y: auto;
 `;
 
 const ModalWrapper = styled.div`
