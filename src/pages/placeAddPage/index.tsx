@@ -126,7 +126,7 @@ export default function PlaceAddPage() {
           value={address}
         />
         <Input
-          type="text"
+          type="number"
           placeholder="드랍인 가격을 입력해주세요"
           onChange={(e) => {
             setPrice(e.target.value);
