@@ -70,7 +70,6 @@ export default function PlaceAddPage() {
       name: selectedInfo.name,
       price: price,
       address: address,
-      isOpen: isOpen,
       selectedInfo: selectedInfo,
     });
   };

@@ -18,7 +18,6 @@ export default function Home() {
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: </div>;
 
-  console.log(list);
   return (
     <HomeWrapper>
       <SectionTitle>내 주변 BOX는?</SectionTitle>

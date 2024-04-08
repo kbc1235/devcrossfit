@@ -6,7 +6,7 @@ export default function KakaoMap({ list }: { list?: any }) {
   const [loading, error] = useKakaoLoader({
     appkey: import.meta.env.VITE_KAKAO_MAP_API_KEY,
   });
-  console.log(list);
+
   return (
     <>
       {loading ? (
