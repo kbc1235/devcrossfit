@@ -19,6 +19,7 @@ export default function Input({
     <InputCustom
       type={type}
       onChange={onChange}
+      onClick={onClick}
       value={value}
       placeholder={placeholder}
       readOnly={readOnly}
