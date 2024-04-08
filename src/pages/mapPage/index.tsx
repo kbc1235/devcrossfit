@@ -27,4 +27,5 @@ export default function MapPage() {
 const MapWrapper = styled.div`
   width: 100vw;
   height: 100vh;
+  margin: -1rem;
 `;
