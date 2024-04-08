@@ -19,6 +19,8 @@ export const GlobalStyles = createGlobalStyle`
         vertical-align: baseline;
         font-family: 'Main';
         line-height: 1.5;
+     letter-spacing: 0.05em;
+
         color: ${theme.colors.white};
     }
     body{

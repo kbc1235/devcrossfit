@@ -24,7 +24,9 @@ export default function Home() {
 
   return (
     <HomeWrapper>
-      <SectionTitle>내 주변 BOX는?</SectionTitle>
+      <SectionTitle>
+        내 주변 BOX는? <span>(위치기반 차후 추가 예정 🧑‍💻)</span>
+      </SectionTitle>
       <MapContainer>
         <PlaceSearchBox>
           <PlaceTitle>
@@ -52,8 +54,8 @@ export default function Home() {
       </PlaceAdd>
       <PlaceList>
         <PlaceItem>
-          <PlaceName style={{ fontSize: "16px" }}>이름 / 주소</PlaceName>
-          <PlacePrice style={{ fontSize: "16px" }}>드랍인 비용</PlacePrice>
+          <PlaceName style={{ fontSize: "14px" }}>이름 / 주소</PlaceName>
+          <PlacePrice style={{ fontSize: "14px" }}>드랍인 비용</PlacePrice>
         </PlaceItem>
         {list?.map((item) => (
           <PlaceItem key={item.id}>
@@ -98,10 +100,16 @@ const PlaceName = styled.p`
   font-size: 24px;
   font-weight: 700;
   color: ${theme.colors.white};
+  @media (max-width: 500px) {
+    font-size: 16px;
+  }
 `;
 const PlaceAddress = styled(PlaceName)`
   font-size: 13px;
   font-weight: 400;
+  @media (max-width: 500px) {
+    font-size: 12px;
+  }
 `;
 const PlacePrice = styled(PlaceName)`
   margin-left: auto;
@@ -199,6 +207,12 @@ const MapContainer = styled.div`
 const SectionTitle = styled.h2`
   font-size: 20px;
   font-weight: 700;
+  span {
+    margin-left: 10px;
+    font-size: 12px;
+    font-weight: 400;
+    color: ${theme.colors.sub2};
+  }
 `;
 
 const HomeWrapper = styled.div`
