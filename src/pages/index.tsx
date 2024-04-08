@@ -53,8 +53,12 @@ export default function Home() {
         </AddBtn>
       </PlaceAdd>
       <PlaceList>
-        <PlaceItem>
-          <PlaceName style={{ fontSize: "14px" }}>이름 / 주소</PlaceName>
+        <PlaceItem
+          style={{ position: "sticky", top: 0, background: theme.colors.main }}
+        >
+          <PlaceName style={{ fontSize: "14px" }}>
+            이름 / 주소 (Total : {list?.length})
+          </PlaceName>
           <PlacePrice style={{ fontSize: "14px" }}>드랍인 비용</PlacePrice>
         </PlaceItem>
         {list?.map((item) => (
@@ -75,7 +79,7 @@ const PlaceList = styled.ul`
   margin-top: 20px;
   max-height: 286px;
   overflow-y: auto;
-  padding: 1rem;
+  padding: 0 0.8rem;
   &::-webkit-scrollbar {
     width: 4px;
   }
