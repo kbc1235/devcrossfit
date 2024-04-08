@@ -6,6 +6,7 @@ export default function KakaoMap({ list }: { list?: any }) {
   const [loading, error] = useKakaoLoader({
     appkey: import.meta.env.VITE_KAKAO_MAP_API_KEY,
   });
+  console.log(list);
   return (
     <>
       {loading ? (
@@ -26,11 +27,14 @@ export default function KakaoMap({ list }: { list?: any }) {
           }}
           level={3} // 지도의 확대 레벨
         >
-          {list?.map((item: any) => (
+          {list?.map((item: any, index: number) => (
             <MapMarker
-              key={item.id}
-              position={{ lat: item.lat, lng: item.lng }}
-              title={item.name}
+              key={index}
+              position={{
+                lat: item.selectedInfo.lat,
+                lng: item.selectedInfo.lng,
+              }}
+              title={item.selectedInfo.name}
             />
           ))}
         </Map>
