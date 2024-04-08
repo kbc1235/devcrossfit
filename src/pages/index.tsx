@@ -51,13 +51,17 @@ export default function Home() {
         </AddBtn>
       </PlaceAdd>
       <PlaceList>
+        <PlaceItem>
+          <PlaceName style={{ fontSize: "16px" }}>이름 / 주소</PlaceName>
+          <PlacePrice style={{ fontSize: "16px" }}>드랍인 비용</PlacePrice>
+        </PlaceItem>
         {list?.map((item) => (
           <PlaceItem key={item.id}>
             <PlaceItemWrapper>
               <PlaceName>{item.name}</PlaceName>
               <PlaceAddress>{item.address}</PlaceAddress>
             </PlaceItemWrapper>
-            <PlacePrice>드랍인 비용: {price(item.price)}원</PlacePrice>
+            <PlacePrice>{price(item.price)}원</PlacePrice>
           </PlaceItem>
         ))}
       </PlaceList>
@@ -67,15 +71,33 @@ export default function Home() {
 
 const PlaceList = styled.ul`
   margin-top: 20px;
+  max-height: 33vh;
+  overflow-y: auto;
+  padding: 1rem;
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-track {
+    border-radius: 8px;
+    background: ${theme.colors.sub};
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background: ${theme.colors.sub2};
+  }
 `;
 const PlaceItemWrapper = styled.div``;
 const PlaceItem = styled.li`
+  & + & {
+    margin-top: 10px;
+  }
   display: flex;
   align-items: center;
 `;
 const PlaceName = styled.p`
   font-size: 24px;
   font-weight: 700;
+  color: ${theme.colors.white};
 `;
 const PlaceAddress = styled(PlaceName)`
   font-size: 13px;
