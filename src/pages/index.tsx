@@ -18,6 +18,10 @@ export default function Home() {
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: </div>;
 
+  const price = (num: number) => {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
+
   return (
     <HomeWrapper>
       <SectionTitle>내 주변 BOX는?</SectionTitle>
@@ -49,7 +53,11 @@ export default function Home() {
       <PlaceList>
         {list?.map((item) => (
           <PlaceItem key={item.id}>
-            <PlaceName>{item.name}</PlaceName>
+            <PlaceItemWrapper>
+              <PlaceName>{item.name}</PlaceName>
+              <PlaceAddress>{item.address}</PlaceAddress>
+            </PlaceItemWrapper>
+            <PlacePrice>드랍인 비용: {price(item.price)}원</PlacePrice>
           </PlaceItem>
         ))}
       </PlaceList>
@@ -60,8 +68,24 @@ export default function Home() {
 const PlaceList = styled.ul`
   margin-top: 20px;
 `;
-const PlaceItem = styled.li``;
-const PlaceName = styled.p``;
+const PlaceItemWrapper = styled.div``;
+const PlaceItem = styled.li`
+  display: flex;
+  align-items: center;
+`;
+const PlaceName = styled.p`
+  font-size: 24px;
+  font-weight: 700;
+`;
+const PlaceAddress = styled(PlaceName)`
+  font-size: 13px;
+  font-weight: 400;
+`;
+const PlacePrice = styled(PlaceName)`
+  margin-left: auto;
+  font-size: 18px;
+  font-weight: 400;
+`;
 
 const AddBtn = styled(Btn)`
   width: 100%;

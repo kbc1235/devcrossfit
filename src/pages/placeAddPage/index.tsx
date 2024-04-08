@@ -2,7 +2,14 @@ import axios from "axios";
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
+import {
+  doc,
+  addDoc,
+  collection,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 
 import { db } from "../../firebase";
 import { useToastContext } from "../../components/toastContext";
@@ -29,6 +36,7 @@ export default function PlaceAddPage() {
 
   const [selectedInfo, setSelectedInfo] = useState<Place["selectedInfo"]>({
     name: "",
+    address: "",
     lat: "",
     lng: "",
   });
@@ -41,7 +49,8 @@ export default function PlaceAddPage() {
       const querySnapshot = await getDocs(q);
       if (querySnapshot.empty) {
         // 중복 데이터가 없으면 새 문서 추가
-        return addDoc(placeCollectionRef, newPlace);
+        const newId = doc(placeCollectionRef).id; // 고유 아이디 생성
+        return addDoc(placeCollectionRef, { id: newId, ...newPlace });
       } else {
         // 중복 데이터가 있으면 에러 또는 특정 처리
         throw new Error("Duplicate data found");
@@ -69,7 +78,7 @@ export default function PlaceAddPage() {
       createdAt: dayjs().format("YYYY-MM-DD HH:mm"),
       name: selectedInfo.name,
       price: price,
-      address: address,
+      address: selectedInfo.address,
       selectedInfo: selectedInfo,
     });
   };
@@ -196,6 +205,7 @@ const AddressModal = ({
                 onClick={() => {
                   setSelectedInfo({
                     name: item.place_name,
+                    address: item.road_address_name,
                     lat: item.y,
                     lng: item.x,
                   });

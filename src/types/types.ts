@@ -16,6 +16,7 @@ export type Place = {
   imgList: string[];
   selectedInfo: {
     name: string;
+    address: string;
     lat: string;
     lng: string;
   };
