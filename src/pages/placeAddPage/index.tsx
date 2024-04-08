@@ -191,36 +191,59 @@ const AddressModal = ({
   return (
     <ModalWrapper>
       <ModalContent ref={modalRef}>
-        <ModalTitle>박스 검색 결과</ModalTitle>
+        <ModalTitle>
+          박스 검색 결과
+          <Button
+            type="button"
+            $caseType="cancel"
+            onClick={() => setIsOpen(false)}
+            style={{ maxWidth: 50, marginLeft: "auto" }}
+          >
+            👋
+          </Button>
+        </ModalTitle>
         <ModalList>
-          {keywordList?.map((item: any) => (
-            <ModalItem key={item.id}>
-              <ItemInfo>
-                <ItemTitle>{item.place_name}</ItemTitle>
-                <ItemAddress>{item.address_name}</ItemAddress>
-              </ItemInfo>
-              <Button
-                type="button"
-                $caseType="primary"
-                onClick={() => {
-                  setSelectedInfo({
-                    name: item.place_name,
-                    address: item.road_address_name,
-                    lat: item.y,
-                    lng: item.x,
-                  });
-                  setIsOpen(false);
-                }}
-              >
-                선택
-              </Button>
-            </ModalItem>
-          ))}
+          {keywordList.length > 0 && keywordList ? (
+            keywordList?.map((item: any) => (
+              <ModalItem key={item.id}>
+                <ItemInfo>
+                  <ItemTitle>{item.place_name}</ItemTitle>
+                  <ItemAddress>{item.address_name}</ItemAddress>
+                </ItemInfo>
+                <Button
+                  type="button"
+                  $caseType="primary"
+                  onClick={() => {
+                    setSelectedInfo({
+                      name: item.place_name,
+                      address: item.road_address_name,
+                      lat: item.y,
+                      lng: item.x,
+                    });
+                    setIsOpen(false);
+                  }}
+                >
+                  선택
+                </Button>
+              </ModalItem>
+            ))
+          ) : (
+            <NotFound>검색결과가 없습니다.</NotFound>
+          )}
         </ModalList>
       </ModalContent>
     </ModalWrapper>
   );
 };
+const NotFound = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100% - 73px);
+  font-size: 16px;
+  font-family: "point";
+  color: ${theme.colors.main};
+`;
 
 const ModalItem = styled.li`
   & + & {
@@ -259,13 +282,16 @@ const ModalList = styled.ul`
 `;
 
 const ModalTitle = styled.h3`
+  display: flex;
+  align-items: center;
   padding: 10px;
   font-size: 20px;
   font-weight: 600;
-  color: ${theme.colors.sub2};
+  color: ${theme.colors.main};
 `;
 const ModalContent = styled.div`
-  width: 500px;
+  width: 100%;
+  max-width: 500px;
   height: 500px;
   background-color: #fff;
   border-radius: 10px;
@@ -280,6 +306,7 @@ const ModalWrapper = styled.div`
   align-items: center;
   width: 100%;
   height: 100%;
+  padding: 1rem;
   background-color: rgba(0, 0, 0, 0.5);
 `;
 
@@ -291,7 +318,7 @@ const IputWrapper = styled.div`
 
 const Button = styled(Btn)<{ $caseType: "cancel" | "primary" }>`
   flex: 1;
-  padding: 12px 20px;
+  padding: 1rem;
   border: none;
   border-radius: 10px;
   color: #fff;
