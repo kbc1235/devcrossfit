@@ -25,7 +25,7 @@ export default function Home() {
   return (
     <HomeWrapper>
       <SectionTitle>
-        내 주변 BOX는? <span>(위치기반 차후 추가 예정 🧑‍💻)</span>
+        내 주변 BOX는? <span>(위치기반 추가 예정 🧑‍💻)</span>
       </SectionTitle>
       <MapContainer>
         <PlaceSearchBox>
@@ -112,9 +112,11 @@ const PlaceAddress = styled(PlaceName)`
   }
 `;
 const PlacePrice = styled(PlaceName)`
+  min-width: 80px;
   margin-left: auto;
   font-size: 18px;
   font-weight: 400;
+  text-align: right;
 `;
 
 const AddBtn = styled(Btn)`
@@ -203,12 +205,14 @@ const MapContainer = styled.div`
   & > div {
     flex: 1;
   }
+  @media (max-width: 500px) {
+    height: 300px;
+  }
 `;
 const SectionTitle = styled.h2`
   font-size: 20px;
   font-weight: 700;
   span {
-    margin-left: 10px;
     font-size: 12px;
     font-weight: 400;
     color: ${theme.colors.sub2};
