@@ -71,7 +71,7 @@ export default function Home() {
 
 const PlaceList = styled.ul`
   margin-top: 20px;
-  max-height: 33vh;
+  max-height: 286px;
   overflow-y: auto;
   padding: 1rem;
   &::-webkit-scrollbar {
