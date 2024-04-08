@@ -3,3 +3,20 @@ export type SvgProps = {
   height?: number;
   fill?: string;
 };
+
+export type Place = {
+  id: string;
+  createdAt: string;
+  name: string;
+  price: string;
+  address: string;
+  keywordList: string[];
+  isOpen: boolean;
+  imgUpload: string;
+  imgList: string[];
+  selectedInfo: {
+    name: string;
+    lat: string;
+    lng: string;
+  };
+};

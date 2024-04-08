@@ -3,12 +3,14 @@ import styled from "styled-components";
 export default function Input({
   type,
   onChange,
+  onClick,
   value,
   placeholder,
   readOnly,
 }: {
   type: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onClick?: (e: React.MouseEvent<HTMLInputElement>) => void;
   value: string;
   placeholder: string;
   readOnly?: boolean;

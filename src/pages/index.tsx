@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { db } from "../firebase";
 import { collection, getDocs } from "firebase/firestore";
@@ -8,18 +8,17 @@ import Button, { Btn } from "../components/button";
 
 export default function Home() {
   const navigate = useNavigate();
-  const [list, setList] = useState<any[]>([]);
 
   const record = async () => {
     const placeCollectionRef = collection(db, "place");
     const res = await getDocs(placeCollectionRef);
-    setList(res.docs.map((doc) => ({ ...doc.data() })));
+    return res.docs.map((doc) => ({ ...doc.data() }));
   };
+  const { data: list, isLoading, error } = useQuery("placeList", record);
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: </div>;
 
-  useEffect(() => {
-    record();
-  }, []);
-
+  console.log(list);
   return (
     <HomeWrapper>
       <SectionTitle>내 주변 BOX는?</SectionTitle>

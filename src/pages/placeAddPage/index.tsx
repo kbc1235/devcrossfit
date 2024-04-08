@@ -1,9 +1,11 @@
 import axios from "axios";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { doc, addDoc, collection } from "firebase/firestore";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 
 import { db } from "../../firebase";
+import { useToastContext } from "../../components/toastContext";
 
 import styled from "styled-components";
 import dayjs from "dayjs";
@@ -13,49 +15,94 @@ import { Btn } from "../../components/button";
 
 import theme from "../../styles/theme";
 import useOutsideClick from "../../hook/useOutsideClick";
+import { Place } from "../../types/types";
 
 export default function PlaceAddPage() {
   const navigate = useNavigate();
-  const [price, setPrice] = useState<string>("");
-  const [address, setAddress] = useState<string>("");
-  const [keywordList, setKeywordList] = useState<string[]>([]);
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [selectedInfo, setSelectedInfo] = useState<{
-    name: string;
-    lat: string;
-    lng: string;
-  }>({
+  const queryClient = useQueryClient();
+  const { showToast } = useToastContext();
+
+  const [price, setPrice] = useState<Place["price"]>("");
+  const [address, setAddress] = useState<Place["address"]>("");
+  const [keywordList, setKeywordList] = useState<Place["keywordList"]>([]);
+  const [isOpen, setIsOpen] = useState<Place["isOpen"]>(false);
+
+  const [selectedInfo, setSelectedInfo] = useState<Place["selectedInfo"]>({
     name: "",
     lat: "",
     lng: "",
   });
 
+  const addPlaceMutation = useMutation(
+    async (newPlace: any) => {
+      const placeCollectionRef = collection(db, "place");
+      // name 필드를 기준으로 중복 데이터 검색
+      const q = query(placeCollectionRef, where("name", "==", newPlace.name));
+      const querySnapshot = await getDocs(q);
+      if (querySnapshot.empty) {
+        // 중복 데이터가 없으면 새 문서 추가
+        return addDoc(placeCollectionRef, newPlace);
+      } else {
+        // 중복 데이터가 있으면 에러 또는 특정 처리
+        throw new Error("Duplicate data found");
+      }
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("places");
+        navigate("/");
+        showToast("등록이 완료되었습니다.", "success");
+      },
+      onError: (error) => {
+        if (
+          error instanceof Error &&
+          error.message === "Duplicate data found"
+        ) {
+          showToast("이미 등록 되어있는 박스 정보 입니다.", "warning");
+        }
+      },
+    }
+  );
+
   const handleSubmit = async () => {
-    const placeCollectionRef = collection(db, "place");
-    const newPlaceRef = doc(placeCollectionRef);
-    await addDoc(placeCollectionRef, {
-      id: newPlaceRef.id,
+    addPlaceMutation.mutate({
       createdAt: dayjs().format("YYYY-MM-DD HH:mm"),
       name: selectedInfo.name,
       price: price,
-      lat: selectedInfo.lat,
-      lng: selectedInfo.lng,
+      address: address,
+      isOpen: isOpen,
+      selectedInfo: selectedInfo,
     });
   };
 
-  const handleAddress = async () => {
-    const res = await axios.get(
-      `https://dapi.kakao.com/v2/local/search/keyword.json?query=${address}`,
-      {
-        headers: {
-          Authorization: `KakaoAK ${import.meta.env.VITE_KAKAO_REST_API_KEY}`,
-        },
-      }
-    );
-    if (res.data.documents.length > 0) {
-      setKeywordList(res.data.documents);
+  // 주소 데이터를 가져오기 위해 useQuery 사용
+  const { data: keywordData, refetch: refetchAddress } = useQuery(
+    ["addressSearch", address],
+    async () => {
+      const res = await axios.get(
+        `https://dapi.kakao.com/v2/local/search/keyword.json?query=${address}`,
+        {
+          headers: {
+            Authorization: `KakaoAK ${import.meta.env.VITE_KAKAO_REST_API_KEY}`,
+          },
+        }
+      );
+      return res.data.documents;
+    },
+    {
+      enabled: false, // 이 쿼리는 자동으로 실행되지 않습니다.
     }
+  );
+  const handleAddress = () => {
+    refetchAddress();
   };
+
+  // keywordData를 기반으로 keywordList를 업데이트하기 위해 useEffect 사용
+  useEffect(() => {
+    if (keywordData) {
+      setKeywordList(keywordData);
+    }
+  }, [keywordData]);
 
   const validate = !selectedInfo.name || !price || !address;
 
@@ -105,7 +152,6 @@ export default function PlaceAddPage() {
           $caseType="primary"
           onClick={() => {
             handleSubmit();
-            navigate("/");
           }}
           disabled={validate}
         >
@@ -181,7 +227,7 @@ const ModalItem = styled.li`
   }
 `;
 
-const ItemInfo = styled.p`
+const ItemInfo = styled.div`
   font-size: 14px;
 `;
 
