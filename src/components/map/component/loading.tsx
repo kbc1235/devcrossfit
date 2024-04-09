@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import theme from "../../../styles/theme";
 
 export default function Loading() {
   return (
@@ -21,7 +22,7 @@ const Loader = styled.div`
     top: 0;
     width: 24px;
     height: 48px;
-    background: #222;
+    background: ${theme.colors.white};
     border-radius: 0 24px 24px 0;
     transform-origin: 0 0;
     animation: flip 2s linear infinite alternate;
@@ -51,7 +52,7 @@ const LoadingText = styled.p`
   margin-top: 16px;
   font-size: 16px;
   font-weight: 600;
-  color: #222;
+  color: ${theme.colors.white};
 `;
 
 const LoadingContainer = styled.div`
