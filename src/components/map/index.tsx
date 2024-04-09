@@ -59,22 +59,24 @@ const CustomMarker = ({ item }: { item: any }) => {
   const priceNum = price(item.price);
 
   return (
-    <>
-      <CustomMarkerWrapper onClick={() => setIsOpen(!isOpen)}>
-        <MarkerIcon width={36} height={36} fill={theme.colors.sub2} />
-        {isOpen && (
-          <MarkerInfo>
-            <Title>{item.selectedInfo.name}</Title>
-            <Content>
-              <Address>{item.selectedInfo.address}</Address>
-              <Price>
-                <span>{priceNum}</span>원
-              </Price>
-            </Content>
-          </MarkerInfo>
-        )}
-      </CustomMarkerWrapper>
-    </>
+    <CustomMarkerWrapper onClick={() => setIsOpen(!isOpen)}>
+      <MarkerIcon width={36} height={36} fill={theme.colors.sub2} />
+      {isOpen && (
+        <MarkerInfo>
+          <Title>{item.selectedInfo.name}</Title>
+          <Content>
+            <Address>{item.selectedInfo.address}</Address>
+            <Price>
+              <span>드랍인:</span>
+              <span>
+                {priceNum}
+                <span>원</span>
+              </span>
+            </Price>
+          </Content>
+        </MarkerInfo>
+      )}
+    </CustomMarkerWrapper>
   );
 };
 const Address = styled.p`
@@ -82,14 +84,31 @@ const Address = styled.p`
   color: #888;
 `;
 const Price = styled.p`
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
   margin-top: 10px;
   text-align: right;
   color: ${theme.colors.sub};
   font-size: 0.8rem;
 
   & > span {
+    margin-left: auto;
     font-size: 1rem;
     color: ${theme.colors.sub};
+    font-weight: 600;
+
+    &:first-child {
+      margin-left: 0;
+
+      font-size: 0.8rem;
+      font-weight: 300;
+    }
+    & > span {
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: ${theme.colors.sub};
+    }
   }
 `;
 const Content = styled.div``;
@@ -104,11 +123,24 @@ const MarkerInfo = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  margin-top: -2.4rem;
   background: #fff;
   padding: 10px;
   border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.3));
   z-index: 1001;
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -9px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #fff;
+  }
 `;
 
 const CustomMarkerWrapper = styled.div`
