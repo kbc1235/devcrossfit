@@ -108,6 +108,7 @@ const MarkerInfo = styled.div`
   padding: 10px;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  z-index: 1001;
 `;
 
 const CustomMarkerWrapper = styled.div`
