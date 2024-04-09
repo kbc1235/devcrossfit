@@ -5,6 +5,15 @@ import { collection, getDocs } from "firebase/firestore";
 import styled from "styled-components";
 import theme from "../styles/theme";
 import Button, { Btn } from "../components/button";
+import dayjs from "dayjs";
+
+interface Place {
+  id: string;
+  name: string;
+  address: string;
+  price: number;
+  createdAt: string;
+}
 
 export default function Home() {
   const navigate = useNavigate();
@@ -12,7 +21,12 @@ export default function Home() {
   const record = async () => {
     const placeCollectionRef = collection(db, "place");
     const res = await getDocs(placeCollectionRef);
-    return res.docs.map((doc) => ({ ...doc.data() }));
+    const docs: Place[] = res.docs.map((doc) => ({
+      ...(doc.data() as Omit<Place, "id">),
+      id: doc.id,
+    }));
+    docs.sort((a, b) => dayjs(b.createdAt).unix() - dayjs(a.createdAt).unix());
+    return docs;
   };
   const { data: list, isLoading, error } = useQuery("placeList", record);
   if (isLoading) return <div>Loading...</div>;
@@ -20,6 +34,18 @@ export default function Home() {
 
   const price = (num: number) => {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
+
+  const durationFromNow = (date: string) => {
+    const now = dayjs();
+    const targetDate = dayjs(date);
+    if (now.diff(targetDate, "day") > 0) {
+      return `${targetDate.format("YYYY-MM-DD")}`;
+    } else if (now.diff(targetDate, "hour") > 0) {
+      return `${now.diff(targetDate, "hour")}시간 전`;
+    } else {
+      return `${now.diff(targetDate, "minute")}분 전`;
+    }
   };
 
   return (
@@ -66,6 +92,9 @@ export default function Home() {
             <PlaceItemWrapper>
               <PlaceName>{item.name}</PlaceName>
               <PlaceAddress>{item.address}</PlaceAddress>
+              <PlaceAddTime>
+                등록시간 : {durationFromNow(item.createdAt)}
+              </PlaceAddTime>
             </PlaceItemWrapper>
             <PlacePrice>{price(item.price)}원</PlacePrice>
           </PlaceItem>
@@ -100,10 +129,19 @@ const PlaceItem = styled.li`
   display: flex;
   align-items: center;
 `;
+const PlaceAddTime = styled.p`
+  margin-top: 10px;
+  font-size: 13px;
+  color: ${theme.colors.white};
+`;
 const PlaceName = styled.p`
   font-size: 24px;
   font-weight: 700;
   color: ${theme.colors.white};
+  span {
+    font-size: 13px;
+    color: ${theme.colors.white};
+  }
   @media (max-width: 500px) {
     font-size: 16px;
   }
@@ -111,6 +149,7 @@ const PlaceName = styled.p`
 const PlaceAddress = styled(PlaceName)`
   font-size: 13px;
   font-weight: 400;
+
   @media (max-width: 500px) {
     font-size: 12px;
   }

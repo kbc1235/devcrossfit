@@ -60,8 +60,7 @@ const CustomMarker = ({ item }: { item: any }) => {
 
   return (
     <CustomMarkerWrapper onClick={() => setIsOpen(!isOpen)}>
-      <MarkerIcon width={36} height={36} fill={theme.colors.sub2} />
-      {isOpen && (
+      {isOpen ? (
         <MarkerInfo>
           <Title>{item.selectedInfo.name}</Title>
           <Content>
@@ -75,6 +74,8 @@ const CustomMarker = ({ item }: { item: any }) => {
             </Price>
           </Content>
         </MarkerInfo>
+      ) : (
+        <MarkerIcon width={36} height={36} fill={theme.colors.sub2} />
       )}
     </CustomMarkerWrapper>
   );
@@ -128,7 +129,6 @@ const MarkerInfo = styled.div`
   padding: 10px;
   border-radius: 5px;
   filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.3));
-  z-index: 1001;
   &::after {
     content: "";
     position: absolute;
