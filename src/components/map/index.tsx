@@ -40,9 +40,7 @@ export default function KakaoMap({ list }: { list?: any }) {
                 lng: item.selectedInfo.lng,
               }}
             >
-              <CustomMarker>
-                <MarkerIcon width={36} height={36} fill={theme.colors.sub2} />
-              </CustomMarker>
+              <CustomMarker item={item} />
             </CustomOverlayMap>
           ))}
         </Map>
@@ -51,7 +49,68 @@ export default function KakaoMap({ list }: { list?: any }) {
   );
 }
 
-const CustomMarker = styled.div`
+const CustomMarker = ({ item }: { item: any }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const price = (num: number) => {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
+
+  const priceNum = price(item.price);
+
+  return (
+    <>
+      <CustomMarkerWrapper onClick={() => setIsOpen(!isOpen)}>
+        <MarkerIcon width={36} height={36} fill={theme.colors.sub2} />
+        {isOpen && (
+          <MarkerInfo>
+            <Title>{item.selectedInfo.name}</Title>
+            <Content>
+              <Address>{item.selectedInfo.address}</Address>
+              <Price>
+                <span>{priceNum}</span>원
+              </Price>
+            </Content>
+          </MarkerInfo>
+        )}
+      </CustomMarkerWrapper>
+    </>
+  );
+};
+const Address = styled.p`
+  font-size: 0.8rem;
+  color: #888;
+`;
+const Price = styled.p`
+  margin-top: 10px;
+  text-align: right;
+  color: ${theme.colors.sub};
+  font-size: 0.8rem;
+
+  & > span {
+    font-size: 1rem;
+    color: ${theme.colors.sub};
+  }
+`;
+const Content = styled.div``;
+const Title = styled.h1`
+  font-size: 16px;
+  font-weight: 600;
+  color: ${theme.colors.sub2};
+`;
+
+const MarkerInfo = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+`;
+
+const CustomMarkerWrapper = styled.div`
   position: relative;
   & > svg {
     position: absolute;
