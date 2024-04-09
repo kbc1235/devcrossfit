@@ -327,7 +327,7 @@ const Button = styled(Btn)<{ $caseType: "cancel" | "primary" }>`
   color: #fff;
   ${({ $caseType }) =>
     $caseType === "primary"
-      ? `background-color: ${theme.colors.sub2};&:hover{background-color:#07676b}`
+      ? `background-color: ${theme.colors.sub2};&:hover{background-color:${theme.colors.sub}`
       : $caseType === "cancel"
       ? `
         background-color: #f54848;
