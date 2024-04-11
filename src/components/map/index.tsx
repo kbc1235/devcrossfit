@@ -3,7 +3,9 @@ import { useKakaoLoader, Map, CustomOverlayMap } from "react-kakao-maps-sdk";
 import styled from "styled-components";
 import Loading from "./component/loading";
 import Error from "./component/error";
+import LocalIcon from "../../assets/svg/local";
 import MarkerIcon from "../../assets/svg/marker";
+import { Btn } from "../button";
 
 import theme from "../../styles/theme";
 
@@ -21,6 +23,7 @@ export default function KakaoMap({ list }: { list?: any }) {
     };
     error: null | string;
     isLoading: boolean;
+    isPanto: boolean;
     myLocation: null | {
       lat: number;
       lng: number;
@@ -29,8 +32,17 @@ export default function KakaoMap({ list }: { list?: any }) {
     center: null,
     error: null,
     isLoading: true,
+    isPanto: false,
     myLocation: null,
   });
+
+  const handleCenter = () => {
+    setState({
+      ...state,
+      center: state.myLocation,
+      isPanto: !state.isPanto,
+    });
+  };
 
   const handleClick = (item?: any) => {
     if (item) {
@@ -93,6 +105,7 @@ export default function KakaoMap({ list }: { list?: any }) {
               width: "100vw",
               height: "100vh",
             }}
+            isPanto={state.isPanto}
             level={3} // 지도의 확대 레벨
           >
             {state.isLoading ? (
@@ -117,6 +130,9 @@ export default function KakaoMap({ list }: { list?: any }) {
             )}
           </Map>
           <MapNav list={list} onClick={handleClick} />
+          <CenterBtn type="button" onClick={handleCenter}>
+            <LocalIcon width={16} height={16} fill={theme.colors.white} />
+          </CenterBtn>
         </>
       )}
     </>
@@ -154,6 +170,17 @@ const CustomMarker = ({ item }: { item: any }) => {
     </CustomMarkerWrapper>
   );
 };
+
+const CenterBtn = styled(Btn)`
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  z-index: 10001;
+  border-radius: 4px;
+  background: ${theme.colors.sub2};
+`;
 const Loacal = styled.div`
   position: relative;
   width: 20px;
