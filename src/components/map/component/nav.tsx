@@ -11,7 +11,7 @@ export default function MapNav({
   list: any;
   onClick: (item: any) => void;
 }) {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(true);
   const handleOpen = () => {
     setIsOpen(!isOpen);
   };
@@ -56,6 +56,9 @@ const Button = styled(Btn)<{ $isOpen: boolean }>`
   }
 `;
 const ListItem = styled.li`
+  & + & {
+    border-top: 1px solid #e0e0e0;
+  }
   padding: 1rem;
   font-size: 1rem;
   font-weight: 600;
@@ -83,5 +86,7 @@ const MapNavWrapper = styled.div<{ $isOpen: boolean }>`
   max-width: 300px;
   height: 100vh;
   background: ${theme.colors.white};
+  border-radius: 0 6px 6px 0;
+  filter: drop-shadow(0 0 0.75rem rgba(0, 0, 0, 0.2));
   z-index: 10001;
 `;
