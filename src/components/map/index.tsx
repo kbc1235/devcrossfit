@@ -7,10 +7,29 @@ import MarkerIcon from "../../assets/svg/marker";
 
 import theme from "../../styles/theme";
 
+import MapNav from "./component/nav";
+
 export default function KakaoMap({ list }: { list?: any }) {
   const [loading, error] = useKakaoLoader({
     appkey: import.meta.env.VITE_KAKAO_MAP_API_KEY,
   });
+
+  const [center, setCenter] = useState<{
+    lat: number;
+    lng: number;
+  }>({
+    lat: 37.54522980141051,
+    lng: 127.07629558399515,
+  });
+
+  const handleClick = (item?: any) => {
+    if (item) {
+      setCenter({
+        lat: item.selectedInfo.lat,
+        lng: item.selectedInfo.lng,
+      });
+    }
+  };
 
   return (
     <>
@@ -19,31 +38,30 @@ export default function KakaoMap({ list }: { list?: any }) {
       ) : error ? (
         <Error />
       ) : (
-        <Map // 지도를 표시할 Container
-          center={{
-            // 지도의 중심좌표
-            lat: 37.54522980141051,
-            lng: 127.07629558399515,
-          }}
-          style={{
-            // 지도의 크기
-            width: "100%",
-            height: "100%",
-          }}
-          level={3} // 지도의 확대 레벨
-        >
-          {list?.map((item: any) => (
-            <CustomOverlayMap
-              key={item.id}
-              position={{
-                lat: item.selectedInfo.lat,
-                lng: item.selectedInfo.lng,
-              }}
-            >
-              <CustomMarker item={item} />
-            </CustomOverlayMap>
-          ))}
-        </Map>
+        <>
+          <Map // 지도를 표시할 Container
+            center={center}
+            style={{
+              // 지도의 크기
+              width: "100%",
+              height: "100%",
+            }}
+            level={3} // 지도의 확대 레벨
+          >
+            {list?.map((item: any) => (
+              <CustomOverlayMap
+                key={item.id}
+                position={{
+                  lat: item.selectedInfo.lat,
+                  lng: item.selectedInfo.lng,
+                }}
+              >
+                <CustomMarker item={item} />
+              </CustomOverlayMap>
+            ))}
+          </Map>
+          <MapNav list={list} onClick={handleClick} />
+        </>
       )}
     </>
   );
@@ -80,6 +98,7 @@ const CustomMarker = ({ item }: { item: any }) => {
     </CustomMarkerWrapper>
   );
 };
+
 const Address = styled.p`
   font-size: 0.8rem;
   color: #888;

@@ -265,4 +265,5 @@ const SectionTitle = styled.h2`
 const HomeWrapper = styled.div`
   max-width: 800px;
   margin: 0 auto;
+  padding: 1rem 0;
 `;
