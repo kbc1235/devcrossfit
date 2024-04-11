@@ -15,19 +15,21 @@ export default function KakaoMap({ list }: { list?: any }) {
   });
 
   const [state, setState] = useState<{
-    center: {
+    center: null | {
       lat: number;
       lng: number;
     };
     error: null | string;
     isLoading: boolean;
+    myLocation: null | {
+      lat: number;
+      lng: number;
+    };
   }>({
-    center: {
-      lat: 37.54522980141051,
-      lng: 127.076295583999515,
-    },
+    center: null,
     error: null,
     isLoading: true,
+    myLocation: null,
   });
 
   const handleClick = (item?: any) => {
@@ -49,6 +51,10 @@ export default function KakaoMap({ list }: { list?: any }) {
           setState({
             ...state,
             center: {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            },
+            myLocation: {
               lat: position.coords.latitude,
               lng: position.coords.longitude,
             },
@@ -81,7 +87,7 @@ export default function KakaoMap({ list }: { list?: any }) {
       ) : (
         <>
           <Map // 지도를 표시할 Container
-            center={state.center}
+            center={state.center || { lat: 33.450701, lng: 126.570667 }}
             style={{
               // 지도의 크기
               width: "100vw",
@@ -103,6 +109,11 @@ export default function KakaoMap({ list }: { list?: any }) {
                   <CustomMarker item={item} />
                 </CustomOverlayMap>
               ))
+            )}
+            {state.myLocation && (
+              <CustomOverlayMap position={state.myLocation}>
+                <Loacal />
+              </CustomOverlayMap>
             )}
           </Map>
           <MapNav list={list} onClick={handleClick} />
@@ -143,7 +154,26 @@ const CustomMarker = ({ item }: { item: any }) => {
     </CustomMarkerWrapper>
   );
 };
+const Loacal = styled.div`
+  position: relative;
+  width: 20px;
+  height: 20px;
+  background: ${theme.colors.sub2};
+  border-radius: 50%;
+  filter: drop-shadow(0 0 3px ${theme.colors.sub2});
 
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    height: 50%;
+    background: ${theme.colors.white};
+    border-radius: 50%;
+  }
+`;
 const Address = styled.p`
   font-size: 0.8rem;
   color: #888;

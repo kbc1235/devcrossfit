@@ -1,6 +1,6 @@
 import { SvgProps } from "../../types/types";
 
-export default function local({ width, height, fill }: SvgProps) {
+export default function LocalIcon({ width, height, fill }: SvgProps) {
   return (
     <svg width={width} height={height} fill={fill} viewBox="0 0 24 24">
       <path
