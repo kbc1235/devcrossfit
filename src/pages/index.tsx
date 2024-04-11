@@ -51,7 +51,7 @@ export default function Home() {
   return (
     <HomeWrapper>
       <SectionTitle>
-        내 주변 BOX는? <span>(위치기반 추가 예정 🧑‍💻)</span>
+        내 주변 BOX는? <span>위치권한 필요</span>
       </SectionTitle>
       <MapContainer>
         <PlaceSearchBox>
@@ -66,9 +66,9 @@ export default function Home() {
             박스는 어디가 있을까?
           </PlaceSubTitle>
         </PlaceSearchBox>
-        <PlaceSearchBox>
+        {/* <PlaceSearchBox>
           <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRV3_Rhla4_nxFErpk6aSOC-HxQ0v09H-paMTJ-0WAvJg&s" />
-        </PlaceSearchBox>
+        </PlaceSearchBox> */}
         <Button type="button" onClick={() => navigate("/map")}>
           박스찾기
         </Button>
@@ -253,11 +253,16 @@ const MapContainer = styled.div`
   }
 `;
 const SectionTitle = styled.h2`
+  display: flex;
+  align-items: center;
   font-size: 20px;
   font-weight: 700;
   span {
+    margin-left: 8px;
+    background: ${theme.colors.white};
+    padding: 2px 6px;
+    border-radius: 4px;
     font-size: 12px;
-    font-weight: 400;
     color: ${theme.colors.sub2};
   }
 `;

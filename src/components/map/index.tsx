@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useKakaoLoader, Map, CustomOverlayMap } from "react-kakao-maps-sdk";
 import styled from "styled-components";
 import Loading from "./component/loading";
@@ -14,22 +14,63 @@ export default function KakaoMap({ list }: { list?: any }) {
     appkey: import.meta.env.VITE_KAKAO_MAP_API_KEY,
   });
 
-  const [center, setCenter] = useState<{
-    lat: number;
-    lng: number;
+  const [state, setState] = useState<{
+    center: {
+      lat: number;
+      lng: number;
+    };
+    error: null | string;
+    isLoading: boolean;
   }>({
-    lat: 37.54522980141051,
-    lng: 127.07629558399515,
+    center: {
+      lat: 37.54522980141051,
+      lng: 127.076295583999515,
+    },
+    error: null,
+    isLoading: true,
   });
 
   const handleClick = (item?: any) => {
     if (item) {
-      setCenter({
-        lat: item.selectedInfo.lat,
-        lng: item.selectedInfo.lng,
+      setState({
+        ...state,
+        center: {
+          lat: item.selectedInfo.lat,
+          lng: item.selectedInfo.lng,
+        },
       });
     }
   };
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setState({
+            ...state,
+            center: {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            },
+            isLoading: false,
+          });
+        },
+        (err) => {
+          setState({
+            ...state,
+            error: err.message,
+            isLoading: false,
+          });
+        }
+      );
+    } else {
+      setState({
+        ...state,
+        error: "Geolocation is not supported by this browser.",
+        isLoading: false,
+      });
+    }
+  }, []);
 
   return (
     <>
@@ -40,7 +81,7 @@ export default function KakaoMap({ list }: { list?: any }) {
       ) : (
         <>
           <Map // 지도를 표시할 Container
-            center={center}
+            center={state.center}
             style={{
               // 지도의 크기
               width: "100vw",
@@ -48,17 +89,21 @@ export default function KakaoMap({ list }: { list?: any }) {
             }}
             level={3} // 지도의 확대 레벨
           >
-            {list?.map((item: any) => (
-              <CustomOverlayMap
-                key={item.id}
-                position={{
-                  lat: item.selectedInfo.lat,
-                  lng: item.selectedInfo.lng,
-                }}
-              >
-                <CustomMarker item={item} />
-              </CustomOverlayMap>
-            ))}
+            {state.isLoading ? (
+              <Loading />
+            ) : (
+              list?.map((item: any) => (
+                <CustomOverlayMap
+                  key={item.id}
+                  position={{
+                    lat: item.selectedInfo.lat,
+                    lng: item.selectedInfo.lng,
+                  }}
+                >
+                  <CustomMarker item={item} />
+                </CustomOverlayMap>
+              ))
+            )}
           </Map>
           <MapNav list={list} onClick={handleClick} />
         </>
