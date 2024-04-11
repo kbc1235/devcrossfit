@@ -149,7 +149,7 @@ const CustomMarker = ({ item }: { item: any }) => {
           </Content>
         </MarkerInfo>
       ) : (
-        <MarkerIcon width={36} height={36} fill={theme.colors.sub2} />
+        <MarkerIcon width={24} height={24} fill={theme.colors.sub2} />
       )}
     </CustomMarkerWrapper>
   );
