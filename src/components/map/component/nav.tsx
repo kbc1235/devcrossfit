@@ -121,7 +121,10 @@ export default function MapNav({ list, myLocation, onClick }: Props) {
               ))
             ) : (
               <ListItem>
-                <NotFound>{`"${debouncedSearch}"의 검색 결과가 없습니다.`}</NotFound>
+                <NotFound>
+                  <span>{`"${debouncedSearch}"`}</span>
+                  등록 되지 않은 박스 이름 입니다.
+                </NotFound>
               </ListItem>
             )
           ) : (
@@ -149,10 +152,16 @@ const NotFound = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   color: ${theme.colors.main};
   font-size: 0.9rem;
   font-weight: 400;
+  text-align: center;
   cursor: default;
+  span {
+    color: ${theme.colors.main};
+    font-weight: 600;
+  }
 `;
 const SearchInput = styled(InputCustom)`
   width: 100%;
