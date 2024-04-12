@@ -103,7 +103,7 @@ export default function KakaoMap({
               height: "100vh",
             }}
             isPanto={state.isPanto}
-            level={3} // 지도의 확대 레벨
+            level={2} // 지도의 확대 레벨
           >
             {state.isLoading ? (
               <Loading />
