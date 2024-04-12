@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useQuery } from "react-query";
 import styled from "styled-components";
 import { calculateDistance } from "../../../util/latlng";
 
@@ -27,6 +28,21 @@ export default function MapNav({ list, myLocation, onClick }: Props) {
   const handleOpen = () => {
     setIsOpen(!isOpen);
   };
+
+  const { data: SortedItems } = useQuery(
+    ["SortedItems", debouncedSearch],
+    () => {
+      return sortedList
+        .filter((item: any) => item.name.includes(debouncedSearch))
+        .map((item: any) => ({
+          ...item,
+          distance: distances.get(item.id),
+        }));
+    },
+    {
+      initialData: [],
+    }
+  );
 
   useEffect(() => {
     const debounce = setTimeout(() => {
@@ -95,14 +111,12 @@ export default function MapNav({ list, myLocation, onClick }: Props) {
       </SearchWrapper>
       <MapNavInner>
         <NavList>
-          {sortedList
-            .filter((item: any) => item.name.includes(debouncedSearch))
-            .map((item: any) => (
-              <ListItem key={item.id} onClick={() => onClick(item)}>
-                <Name>{item.name}</Name>
-                <Distance>{distances.get(item.id)}</Distance>
-              </ListItem>
-            ))}
+          {(SortedItems || []).map((item: any) => (
+            <ListItem key={item.id} onClick={() => onClick(item)}>
+              <Name>{item.name}</Name>
+              <Distance>{distances.get(item.id)}</Distance>
+            </ListItem>
+          ))}
         </NavList>
         <Button type="button" onClick={handleOpen} $isOpen={isOpen}>
           {isOpen ? (
@@ -118,6 +132,7 @@ export default function MapNav({ list, myLocation, onClick }: Props) {
 
 const SearchInput = styled(InputCustom)`
   width: 100%;
+
   padding: 0.5rem 1rem;
   font-size: 1rem;
   border-radius: 6px;
@@ -174,7 +189,7 @@ const NavList = styled.ul`
 
 const MapNavInner = styled.div`
   position: relative;
-  height: 100%;
+  height: calc(100% - 69px);
 `;
 const MapNavWrapper = styled.div<{ $isOpen: boolean }>`
   position: absolute;
