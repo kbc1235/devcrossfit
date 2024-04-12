@@ -45,7 +45,7 @@ export default function MapNav({ list, myLocation, onClick }: Props) {
         const distanceStr =
           distance < 1
             ? `${Math.floor(distance * 1000)}m`
-            : `${Math.floor(distance)}km`;
+            : `${distance.toFixed(2)}km`;
         // 새로 계산된 거리를 새 Map에 저장합니다.
         newDistances.set(distanceKey, distanceStr);
       }
