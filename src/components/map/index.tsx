@@ -11,7 +11,13 @@ import theme from "../../styles/theme";
 
 import MapNav from "./component/nav";
 
-export default function KakaoMap({ list }: { list?: any }) {
+export default function KakaoMap({
+  list,
+  myLocation,
+}: {
+  list?: any;
+  myLocation: { lat: number; lng: number };
+}) {
   const [loading, error] = useKakaoLoader({
     appkey: import.meta.env.VITE_KAKAO_MAP_API_KEY,
   });
@@ -24,22 +30,17 @@ export default function KakaoMap({ list }: { list?: any }) {
     error: null | string;
     isLoading: boolean;
     isPanto: boolean;
-    myLocation: null | {
-      lat: number;
-      lng: number;
-    };
   }>({
     center: null,
     error: null,
     isLoading: true,
     isPanto: false,
-    myLocation: null,
   });
 
   const handleCenter = () => {
     setState({
       ...state,
-      center: state.myLocation,
+      center: myLocation,
       isPanto: !state.isPanto,
     });
   };
@@ -63,10 +64,6 @@ export default function KakaoMap({ list }: { list?: any }) {
           setState({
             ...state,
             center: {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude,
-            },
-            myLocation: {
               lat: position.coords.latitude,
               lng: position.coords.longitude,
             },
@@ -123,17 +120,13 @@ export default function KakaoMap({ list }: { list?: any }) {
                 </CustomOverlayMap>
               ))
             )}
-            {state.myLocation && (
-              <CustomOverlayMap position={state.myLocation}>
+            {myLocation && (
+              <CustomOverlayMap position={myLocation}>
                 <Loacal />
               </CustomOverlayMap>
             )}
           </Map>
-          <MapNav
-            list={list}
-            onClick={handleClick}
-            myLocation={state?.myLocation || { lat: 0, lng: 0 }}
-          />
+          <MapNav list={list} onClick={handleClick} myLocation={myLocation} />
           <CenterBtn type="button" onClick={handleCenter}>
             <LocalIcon width={16} height={16} fill={theme.colors.white} />
           </CenterBtn>
