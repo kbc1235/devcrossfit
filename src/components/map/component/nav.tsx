@@ -111,17 +111,26 @@ export default function MapNav({ list, myLocation, onClick }: Props) {
       </SearchWrapper>
       <MapNavInner>
         <NavList>
-          {(SortedItems || []).length > 0 ? (
-            (SortedItems || []).map((item: any) => (
+          {debouncedSearch.trim().length > 0 ? (
+            (SortedItems || []).length > 0 ? (
+              (SortedItems || []).map((item: any) => (
+                <ListItem key={item.id} onClick={() => onClick(item)}>
+                  <Name>{item.name}</Name>
+                  <Distance>{distances.get(item.id)}</Distance>
+                </ListItem>
+              ))
+            ) : (
+              <ListItem>
+                <NotFound>{`"${debouncedSearch}"의 검색 결과가 없습니다.`}</NotFound>
+              </ListItem>
+            )
+          ) : (
+            sortedList.map((item: any) => (
               <ListItem key={item.id} onClick={() => onClick(item)}>
                 <Name>{item.name}</Name>
-                <Distance>{distances.get(item.id)}</Distance>
+                <Distance>{distances.get(item.id) || "N/A"}</Distance>
               </ListItem>
             ))
-          ) : (
-            <ListItem>
-              <NotFound>{`"${debouncedSearch}"의 검색 결과가 없습니다.`}</NotFound>
-            </ListItem>
           )}
         </NavList>
         <Button type="button" onClick={handleOpen} $isOpen={isOpen}>

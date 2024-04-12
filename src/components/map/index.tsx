@@ -37,6 +37,12 @@ export default function KakaoMap({
     isPanto: false,
   });
 
+  const [openMarkerId, setOpenMarkerId] = useState<number | null>(null);
+
+  // CustomMarker 컴포넌트에 전달할 함수
+  const handleMarkerClick = (id: number) => {
+    setOpenMarkerId(openMarkerId === id ? null : id);
+  };
   const handleCenter = () => {
     setState({
       ...state,
@@ -104,6 +110,7 @@ export default function KakaoMap({
             }}
             isPanto={state.isPanto}
             level={2} // 지도의 확대 레벨
+            zoomable={false}
           >
             {state.isLoading ? (
               <Loading />
@@ -116,7 +123,11 @@ export default function KakaoMap({
                     lng: item.selectedInfo.lng,
                   }}
                 >
-                  <CustomMarker item={item} />
+                  <CustomMarker
+                    item={item}
+                    isOpen={openMarkerId === item.id}
+                    onClick={() => handleMarkerClick(item.id)}
+                  />
                 </CustomOverlayMap>
               ))
             )}
@@ -136,9 +147,15 @@ export default function KakaoMap({
   );
 }
 
-const CustomMarker = ({ item }: { item: any }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
+const CustomMarker = ({
+  item,
+  isOpen,
+  onClick,
+}: {
+  item: any;
+  isOpen: boolean;
+  onClick: () => void;
+}) => {
   const price = (num: number) => {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
@@ -146,7 +163,7 @@ const CustomMarker = ({ item }: { item: any }) => {
   const priceNum = price(item.price);
 
   return (
-    <CustomMarkerWrapper onClick={() => setIsOpen(!isOpen)}>
+    <CustomMarkerWrapper onClick={onClick}>
       {isOpen ? (
         <MarkerInfo>
           <Title>{item.selectedInfo.name}</Title>
@@ -174,7 +191,7 @@ const CenterBtn = styled(Btn)`
   position: absolute;
   bottom: 2dvh;
   right: 10px;
-  z-index: 10001;
+  z-index: 100;
   border-radius: 4px;
   background: ${theme.colors.sub2};
 `;
@@ -247,6 +264,7 @@ const MarkerInfo = styled.div`
   padding: 10px;
   border-radius: 5px;
   filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.3));
+  z-index: 20000;
   &::after {
     content: "";
     position: absolute;
