@@ -4,6 +4,7 @@ import { calculateDistance } from "../../../util/latlng";
 
 import theme from "../../../styles/theme";
 import { Btn } from "../../../components/button";
+import { InputCustom } from "../../../components/input";
 import ArrowUp from "../../../assets/svg/arrowUp";
 
 interface Props {
@@ -20,9 +21,19 @@ export default function MapNav({ list, myLocation, onClick }: Props) {
   const [distances, setDistances] = useState<Map<number, string>>(new Map());
   const [sortedList, setSortedList] = useState<any[]>([]); // 정렬된 리스트를 저장할 상태 추가
 
+  const [search, setSearch] = useState<string>("");
+  const [debouncedSearch, setDebouncedSearch] = useState<string>(search);
+
   const handleOpen = () => {
     setIsOpen(!isOpen);
   };
+
+  useEffect(() => {
+    const debounce = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 500);
+    return () => clearTimeout(debounce);
+  }, [search]);
 
   useEffect(() => {
     // 새로운 Map 객체를 생성하여 캐싱된 거리 정보를 업데이트합니다.
@@ -75,14 +86,23 @@ export default function MapNav({ list, myLocation, onClick }: Props) {
 
   return (
     <MapNavWrapper $isOpen={isOpen}>
+      <SearchWrapper>
+        <SearchInput
+          placeholder="박스이름 검색"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+      </SearchWrapper>
       <MapNavInner>
         <NavList>
-          {sortedList?.map((item: any) => (
-            <ListItem key={item.id} onClick={() => onClick(item)}>
-              <Name>{item.name}</Name>
-              <Distance>{distances.get(item.id)}</Distance>
-            </ListItem>
-          ))}
+          {sortedList
+            .filter((item: any) => item.name.includes(debouncedSearch))
+            .map((item: any) => (
+              <ListItem key={item.id} onClick={() => onClick(item)}>
+                <Name>{item.name}</Name>
+                <Distance>{distances.get(item.id)}</Distance>
+              </ListItem>
+            ))}
         </NavList>
         <Button type="button" onClick={handleOpen} $isOpen={isOpen}>
           {isOpen ? (
@@ -95,6 +115,17 @@ export default function MapNav({ list, myLocation, onClick }: Props) {
     </MapNavWrapper>
   );
 }
+
+const SearchInput = styled(InputCustom)`
+  width: 100%;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 6px;
+`;
+
+const SearchWrapper = styled.div`
+  padding: 1rem;
+`;
 
 const Name = styled.span`
   font-size: 1rem;
