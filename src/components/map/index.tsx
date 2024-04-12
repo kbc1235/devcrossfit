@@ -179,7 +179,7 @@ const CenterBtn = styled(Btn)`
   width: 30px;
   height: 30px;
   position: absolute;
-  bottom: 10px;
+  bottom: 2dvh;
   right: 10px;
   z-index: 10001;
   border-radius: 4px;
