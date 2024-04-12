@@ -129,7 +129,11 @@ export default function KakaoMap({ list }: { list?: any }) {
               </CustomOverlayMap>
             )}
           </Map>
-          <MapNav list={list} onClick={handleClick} />
+          <MapNav
+            list={list}
+            onClick={handleClick}
+            myLocation={state?.myLocation || { lat: 0, lng: 0 }}
+          />
           <CenterBtn type="button" onClick={handleCenter}>
             <LocalIcon width={16} height={16} fill={theme.colors.white} />
           </CenterBtn>
