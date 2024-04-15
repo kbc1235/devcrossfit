@@ -90,7 +90,7 @@ export default function PlaceAddPage() {
   };
 
   const uploadImagesToStorage = async (files: File[]) => {
-    if (!files.length || files.length > 2) return [];
+    if (!files.length || files.length > 1) return [];
     const storage = getStorage();
     const uploadPromises = files.map((file) => {
       const storageRef = ref(storage, `boximg/${file.name}`);
@@ -110,8 +110,8 @@ export default function PlaceAddPage() {
   };
 
   const handleSubmit = async () => {
-    if (images.length > 2)
-      return showToast("이미지는 최대 2개까지 업로드 가능합니다.", "warning");
+    if (images.length > 1)
+      return showToast("이미지는 최대 1개까지 업로드 가능합니다.", "warning");
 
     addPlaceMutation.mutate({
       createdAt: dayjs().format("YYYY-MM-DD HH:mm"),
