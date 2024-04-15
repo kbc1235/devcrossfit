@@ -176,18 +176,20 @@ const CustomMarker = ({
                 <span>원</span>
               </span>
             </Price>
-            {item.selectedInfo.img.length > 0 && (
-              <ImgBox>
-                {item.selectedInfo.img.map((image: string, index: number) => (
-                  <img
-                    key={index}
-                    src={image}
-                    alt={`image-${index}`}
-                    loading="lazy"
-                  />
-                ))}
-              </ImgBox>
-            )}
+            <ImgWrapper>
+              {item.selectedInfo.img.length > 0 && (
+                <ImgBox>
+                  {item.selectedInfo.img.map((image: string, index: number) => (
+                    <img
+                      key={index}
+                      src={image}
+                      alt={`image-${index}`}
+                      loading="lazy"
+                    />
+                  ))}
+                </ImgBox>
+              )}
+            </ImgWrapper>
           </Content>
         </MarkerInfo>
       ) : (
@@ -197,16 +199,23 @@ const CustomMarker = ({
   );
 };
 
+const ImgWrapper = ({ children, ...props }: { children: React.ReactNode }) => (
+  <ImgWraper {...props} onClick={(e) => e.stopPropagation()}>
+    {children}
+  </ImgWraper>
+);
+const ImgWraper = styled.div`
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+`;
 const ImgBox = styled.div`
   display: flex;
   max-width: 250px;
   gap: 10px;
-  overflow-x: scroll;
+  overflow-x: auto;
   overflow-y: hidden;
   margin-top: 10px;
-  &::-webkit-scrollbar {
-    display: none;
-  }
   & > img {
     width: 200px;
     height: 200px;
