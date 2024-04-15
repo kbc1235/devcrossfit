@@ -199,6 +199,7 @@ const CustomMarker = ({
 
 const ImgBox = styled.div`
   display: flex;
+  max-width: 250px;
   gap: 10px;
   overflow-x: scroll;
   overflow-y: hidden;
