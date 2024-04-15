@@ -31,8 +31,6 @@ export default function MapPage() {
     fetchCurrentLocation();
   }, []);
 
-  console.log(list);
-
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error!</div>;
 

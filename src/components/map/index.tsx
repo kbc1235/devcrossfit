@@ -183,7 +183,6 @@ const CustomMarker = ({
                     key={index}
                     src={image}
                     alt={`image-${index}`}
-                    style={{ width: "200px", height: "200px" }}
                     loading="lazy"
                   />
                 ))}
@@ -201,6 +200,17 @@ const CustomMarker = ({
 const ImgBox = styled.div`
   display: flex;
   gap: 10px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  margin-top: 10px;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  & > img {
+    width: 200px;
+    height: 200px;
+    border-radius: 10px;
+  }
 `;
 
 const CenterBtn = styled(Btn)`
