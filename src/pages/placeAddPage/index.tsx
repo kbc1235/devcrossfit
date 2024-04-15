@@ -23,11 +23,13 @@ import { Btn } from "../../components/button";
 import theme from "../../styles/theme";
 import useOutsideClick from "../../hook/useOutsideClick";
 import { Place } from "../../types/types";
+import { useAuth } from "../../hook/useAuth"; // Adjust the path as necessary
 
 export default function PlaceAddPage() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { showToast } = useToastContext();
+  const auth = useAuth();
 
   const [price, setPrice] = useState<Place["price"]>("");
   const [address, setAddress] = useState<Place["address"]>("");
@@ -40,7 +42,6 @@ export default function PlaceAddPage() {
     lat: "",
     lng: "",
   });
-
   const addPlaceMutation = useMutation(
     async (newPlace: any) => {
       const placeCollectionRef = collection(db, "place");
@@ -50,7 +51,11 @@ export default function PlaceAddPage() {
       if (querySnapshot.empty) {
         // 중복 데이터가 없으면 새 문서 추가
         const newId = doc(placeCollectionRef).id; // 고유 아이디 생성
-        return addDoc(placeCollectionRef, { id: newId, ...newPlace });
+        return addDoc(placeCollectionRef, {
+          id: newId,
+          userId: auth?.uid,
+          ...newPlace,
+        });
       } else {
         // 중복 데이터가 있으면 에러 또는 특정 처리
         throw new Error("Duplicate data found");
