@@ -176,13 +176,13 @@ const CustomMarker = ({
                 <span>원</span>
               </span>
             </Price>
-            <ImgWrapper>
-              {item.selectedInfo.img.length > 0 && (
+            {item.selectedInfo.img && (
+              <ImgWrapper>
                 <ImgBox>
                   <img src={item.selectedInfo.img} loading="lazy" />
                 </ImgBox>
-              )}
-            </ImgWrapper>
+              </ImgWrapper>
+            )}
           </Content>
         </MarkerInfo>
       ) : (
