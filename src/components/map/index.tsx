@@ -179,14 +179,7 @@ const CustomMarker = ({
             <ImgWrapper>
               {item.selectedInfo.img.length > 0 && (
                 <ImgBox>
-                  {item.selectedInfo.img.map((image: string, index: number) => (
-                    <img
-                      key={index}
-                      src={image}
-                      alt={`image-${index}`}
-                      loading="lazy"
-                    />
-                  ))}
+                  <img src={item.selectedInfo.img[0].image} loading="lazy" />
                 </ImgBox>
               )}
             </ImgWrapper>
