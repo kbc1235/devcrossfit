@@ -7,13 +7,15 @@ export default function Input({
   value,
   placeholder,
   readOnly,
+  multiple,
 }: {
   type: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onClick?: (e: React.MouseEvent<HTMLInputElement>) => void;
-  value: string;
+  value?: string;
   placeholder: string;
   readOnly?: boolean;
+  multiple?: boolean;
 }) {
   return (
     <InputCustom
@@ -23,6 +25,7 @@ export default function Input({
       value={value}
       placeholder={placeholder}
       readOnly={readOnly}
+      multiple={multiple}
     />
   );
 }

@@ -19,5 +19,6 @@ export type Place = {
     address: string;
     lat: string;
     lng: string;
+    img: File[];
   };
 };

@@ -176,6 +176,19 @@ const CustomMarker = ({
                 <span>원</span>
               </span>
             </Price>
+            {item.selectedInfo.img.length > 0 && (
+              <ImgBox>
+                {item.selectedInfo.img.map((image: string, index: number) => (
+                  <img
+                    key={index}
+                    src={image}
+                    alt={`image-${index}`}
+                    style={{ width: "200px", height: "200px" }}
+                    loading="lazy"
+                  />
+                ))}
+              </ImgBox>
+            )}
           </Content>
         </MarkerInfo>
       ) : (
@@ -184,6 +197,11 @@ const CustomMarker = ({
     </CustomMarkerWrapper>
   );
 };
+
+const ImgBox = styled.div`
+  display: flex;
+  gap: 10px;
+`;
 
 const CenterBtn = styled(Btn)`
   width: 30px;

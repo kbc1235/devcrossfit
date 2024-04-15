@@ -11,13 +11,15 @@ import {
   where,
 } from "firebase/firestore";
 
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+
 import { db } from "../../firebase";
 import { useToastContext } from "../../components/toastContext";
 
 import styled from "styled-components";
 import dayjs from "dayjs";
 
-import Input from "../../components/input";
+import Input, { InputCustom } from "../../components/input";
 import { Btn } from "../../components/button";
 
 import theme from "../../styles/theme";
@@ -31,16 +33,18 @@ export default function PlaceAddPage() {
   const { showToast } = useToastContext();
   const auth = useAuth();
 
+  const [images, setImages] = useState<File[]>([]);
   const [price, setPrice] = useState<Place["price"]>("");
   const [address, setAddress] = useState<Place["address"]>("");
   const [keywordList, setKeywordList] = useState<Place["keywordList"]>([]);
   const [isOpen, setIsOpen] = useState<Place["isOpen"]>(false);
-
+  const inputRef = useRef<HTMLInputElement>(null);
   const [selectedInfo, setSelectedInfo] = useState<Place["selectedInfo"]>({
     name: "",
     address: "",
     lat: "",
     lng: "",
+    img: [],
   });
   const addPlaceMutation = useMutation(
     async (newPlace: any) => {
@@ -78,13 +82,46 @@ export default function PlaceAddPage() {
     }
   );
 
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const fileArray = Array.from(e.target.files);
+      setImages([...images, ...fileArray]);
+    }
+  };
+
+  const uploadImagesToStorage = async (files: File[]) => {
+    if (!files.length || files.length > 2) return [];
+    const storage = getStorage();
+    const uploadPromises = files.map((file) => {
+      const storageRef = ref(storage, `boximg/${file.name}`);
+      return uploadBytes(storageRef, file).then((snapshot) =>
+        getDownloadURL(snapshot.ref)
+      );
+    });
+    try {
+      const downloadURLs = await Promise.all(uploadPromises);
+      console.log("Uploaded blobs or files!", downloadURLs);
+      return downloadURLs; // 업로드된 이미지들의 URL 배열을 반환합니다.
+    } catch (error) {
+      console.error("Upload failed", error);
+      // 에러 처리 로직
+      return [];
+    }
+  };
+
   const handleSubmit = async () => {
+    if (images.length > 2)
+      showToast("이미지는 최대 2개까지 업로드 가능합니다.", "warning");
+
     addPlaceMutation.mutate({
       createdAt: dayjs().format("YYYY-MM-DD HH:mm"),
       name: selectedInfo.name,
       price: price,
       address: selectedInfo.address,
-      selectedInfo: selectedInfo,
+      selectedInfo: {
+        ...selectedInfo,
+        img: await uploadImagesToStorage(images),
+      },
     });
   };
 
@@ -144,6 +181,38 @@ export default function PlaceAddPage() {
           value={selectedInfo.name}
           readOnly
         />
+        <ImageWrapper>
+          <ImgBtn
+            type="button"
+            onClick={() => inputRef.current?.click()}
+            style={{
+              width: images.length > 0 ? "100px" : "100%",
+            }}
+          >
+            사진 선택
+          </ImgBtn>
+          <ImgInput
+            type="file"
+            placeholder="박스 이미지"
+            multiple
+            ref={inputRef}
+            onChange={handleImageChange}
+          />
+          {images.length > 0 && (
+            <ImgBox>
+              {images?.map((image, index) => (
+                <Image key={index}>
+                  <img
+                    src={URL.createObjectURL(image)}
+                    alt={`image-${index}`}
+                    style={{ width: "100px", height: "100px" }}
+                  />
+                </Image>
+              ))}
+            </ImgBox>
+          )}
+        </ImageWrapper>
+
         <Button
           type="button"
           onClick={() => {
@@ -240,6 +309,37 @@ const AddressModal = ({
     </ModalWrapper>
   );
 };
+const Image = styled.div`
+  min-width: 100px;
+  height: 100px;
+  border-radius: 10px;
+  overflow: hidden;
+`;
+const ImgBox = styled.div`
+  display: flex;
+  width: calc(100% - 110px);
+  gap: 10px;
+  overflow-x: auto;
+`;
+
+const ImgBtn = styled(Btn)`
+  width: 100px;
+  height: 100px;
+  background-color: #fff;
+  border: 1px solid ${theme.colors.sub2};
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+const ImgInput = styled(InputCustom)`
+  display: none;
+`;
+const ImageWrapper = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+
 const NotFound = styled.div`
   display: flex;
   justify-content: center;
