@@ -111,7 +111,7 @@ export default function PlaceAddPage() {
 
   const handleSubmit = async () => {
     if (images.length > 2)
-      showToast("이미지는 최대 2개까지 업로드 가능합니다.", "warning");
+      return showToast("이미지는 최대 2개까지 업로드 가능합니다.", "warning");
 
     addPlaceMutation.mutate({
       createdAt: dayjs().format("YYYY-MM-DD HH:mm"),
@@ -153,6 +153,8 @@ export default function PlaceAddPage() {
       setKeywordList(keywordData);
     }
   }, [keywordData]);
+
+  console.log(images);
 
   const validate = !selectedInfo.name || !price || !address;
 
@@ -207,6 +209,16 @@ export default function PlaceAddPage() {
                     alt={`image-${index}`}
                     style={{ width: "100px", height: "100px" }}
                   />
+                  <button
+                    onClick={() => {
+                      const newImages = images.filter(
+                        (_, imgIndex) => imgIndex !== index
+                      );
+                      setImages(newImages);
+                    }}
+                  >
+                    ❌
+                  </button>
                 </Image>
               ))}
             </ImgBox>
@@ -310,10 +322,23 @@ const AddressModal = ({
   );
 };
 const Image = styled.div`
+  position: relative;
   min-width: 100px;
   height: 100px;
   border-radius: 10px;
   overflow: hidden;
+  & > button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 50%;
+  }
 `;
 const ImgBox = styled.div`
   display: flex;
