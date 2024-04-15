@@ -179,7 +179,7 @@ const CustomMarker = ({
             <ImgWrapper>
               {item.selectedInfo.img.length > 0 && (
                 <ImgBox>
-                  <img src={item.selectedInfo.img[0].image} loading="lazy" />
+                  <img src={item.selectedInfo.img} loading="lazy" />
                 </ImgBox>
               )}
             </ImgWrapper>
@@ -193,9 +193,7 @@ const CustomMarker = ({
 };
 
 const ImgWrapper = ({ children, ...props }: { children: React.ReactNode }) => (
-  <ImgWraper {...props} onClick={(e) => e.stopPropagation()}>
-    {children}
-  </ImgWraper>
+  <ImgWraper {...props}>{children}</ImgWraper>
 );
 const ImgWraper = styled.div`
   display: flex;
@@ -204,15 +202,15 @@ const ImgWraper = styled.div`
 `;
 const ImgBox = styled.div`
   display: flex;
-  max-width: 250px;
+  width: 250px;
   gap: 10px;
-  overflow-x: auto;
-  overflow-y: hidden;
+  overflow: hidden;
   margin-top: 10px;
+  border-radius: 10px;
+  border: 1px solid ${theme.colors.sub};
   & > img {
-    width: 200px;
-    height: 200px;
-    border-radius: 10px;
+    width: 100%;
+    height: 250px;
   }
 `;
 
