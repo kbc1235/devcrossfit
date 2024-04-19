@@ -4,6 +4,7 @@ import { db } from "../firebase";
 import { collection, getDocs } from "firebase/firestore";
 import styled from "styled-components";
 import theme from "../styles/theme";
+import Loading from "../components/map/component/loading";
 import Button, { Btn } from "../components/button";
 import dayjs from "dayjs";
 
@@ -29,7 +30,7 @@ export default function Home() {
     return docs;
   };
   const { data: list, isLoading, error } = useQuery("placeList", record);
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading text="불러 오는중" />;
   if (error) return <div>Error: </div>;
 
   const price = (num: number) => {
@@ -66,9 +67,6 @@ export default function Home() {
             박스는 어디가 있을까?
           </PlaceSubTitle>
         </PlaceSearchBox>
-        {/* <PlaceSearchBox>
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRV3_Rhla4_nxFErpk6aSOC-HxQ0v09H-paMTJ-0WAvJg&s" />
-        </PlaceSearchBox> */}
         <Button type="button" onClick={() => navigate("/map")}>
           박스찾기
         </Button>
@@ -106,7 +104,7 @@ export default function Home() {
 
 const PlaceList = styled.ul`
   margin-top: 20px;
-  max-height: 286px;
+  height: calc(100vh - 500px);
   overflow-y: auto;
   padding: 0 0.8rem;
   &::-webkit-scrollbar {
@@ -227,7 +225,6 @@ const MapContainer = styled.div`
   justify-content: center;
   position: relative;
   width: 100%;
-  height: 400px;
   margin-top: 20px;
   border: 1px solid ${theme.colors.sub};
   background: ${theme.colors.sub};
@@ -247,9 +244,6 @@ const MapContainer = styled.div`
   }
   & > div {
     flex: 1;
-  }
-  @media (max-width: 500px) {
-    height: 300px;
   }
 `;
 const SectionTitle = styled.h2`

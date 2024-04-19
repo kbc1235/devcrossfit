@@ -96,7 +96,7 @@ export default function KakaoMap({
   return (
     <>
       {loading ? (
-        <Loading />
+        <Loading text="Box 불러 오는중" />
       ) : error ? (
         <Error />
       ) : (
@@ -113,7 +113,7 @@ export default function KakaoMap({
             zoomable={false}
           >
             {state.isLoading ? (
-              <Loading />
+              <Loading text="Box 불러 오는중" />
             ) : (
               list?.map((item: any) => (
                 <CustomOverlayMap

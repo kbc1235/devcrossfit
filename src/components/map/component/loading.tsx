@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import theme from "../../../styles/theme";
 
-export default function Loading() {
+export default function Loading({ text }: { text: string }) {
   return (
     <LoadingContainer>
       <Loader />
-      <LoadingText>Box 불러 오는중</LoadingText>
+      <LoadingText>{text}</LoadingText>
     </LoadingContainer>
   );
 }
@@ -62,4 +62,9 @@ const LoadingContainer = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10002;
+  background: ${theme.colors.main};
 `;
