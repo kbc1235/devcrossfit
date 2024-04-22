@@ -132,7 +132,7 @@ export default function LineChart({ data, options }: LineChartProps) {
 }
 const TooltipContainer = styled.div`
   position: absolute;
-  bottom: -3rem;
+  bottom: -3.5rem;
   right: 0;
   display: flex;
   align-items: center;
