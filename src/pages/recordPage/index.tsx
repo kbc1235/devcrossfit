@@ -100,7 +100,7 @@ export default function RecordPage() {
           (해당 데이터는 서버에 저장되지 않습니다.[캐시 삭제시 기록 삭제])
         </Alert>
         <AddBtn type="button" onClick={() => setIsOpen(true)}>
-          PR 등록하기
+          1RM 등록하기
         </AddBtn>
         {isOpen && (
           <AddRecordPop setIsOpen={setIsOpen} setStoredData={setStoredData} />
