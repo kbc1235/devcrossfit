@@ -58,9 +58,8 @@ export default function RecordPage() {
       }
       return percentages;
     };
-
     return data.datasets.map((dataset) =>
-      calculatePercentage(dataset.data.slice(-1)[0] as number)
+      calculatePercentage(Math.max(...(dataset.data as number[])))
     );
   }
 
@@ -73,8 +72,10 @@ export default function RecordPage() {
     });
   }
 
-  function convertLBtoKG(lbs: number): number {
-    return Math.floor(lbs * 0.453592);
+  function convertLBtoKG(lbs: number[]): number {
+    if (!lbs.length) return 0;
+    const maxLb = Math.max(...lbs);
+    return Math.floor(maxLb * 0.453592);
   }
 
   useEffect(() => {
@@ -110,19 +111,25 @@ export default function RecordPage() {
           <RecordItem>
             <ItemTitle>DL(kg)</ItemTitle>
             <ItemCont>
-              {convertLBtoKG(data.datasets[0].data.slice(-1)[0] as number) || 0}
+              {convertLBtoKG(
+                data.datasets[0].data.map((item) => item as number)
+              ) || 0}
             </ItemCont>
           </RecordItem>
           <RecordItem>
             <ItemTitle>SQ(kg)</ItemTitle>
             <ItemCont>
-              {convertLBtoKG(data.datasets[1].data.slice(-1)[0] as number) || 0}
+              {convertLBtoKG(
+                data.datasets[1].data.map((item) => item as number)
+              ) || 0}
             </ItemCont>
           </RecordItem>
           <RecordItem>
             <ItemTitle>BP(kg)</ItemTitle>
             <ItemCont>
-              {convertLBtoKG(data.datasets[2].data.slice(-1)[0] as number) || 0}
+              {convertLBtoKG(
+                data.datasets[2].data.map((item) => item as number)
+              ) || 0}
             </ItemCont>
           </RecordItem>
         </RecordList>
