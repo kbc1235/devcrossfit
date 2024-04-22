@@ -53,7 +53,7 @@ export default function RecordPage() {
   function calculateExercisePercentages(data: ChartData<"line">) {
     const calculatePercentage = (value: number) => {
       const percentages = [];
-      for (let i = 100; i >= 10; i -= 10) {
+      for (let i = 100; i >= 5; i -= 5) {
         percentages.push({ percent: i, value: (value * i) / 100 });
       }
       return percentages;
