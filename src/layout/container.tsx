@@ -7,7 +7,7 @@ export default function Container({ children }: { children: React.ReactNode }) {
 
 const LayoutContainer = styled.div`
   width: 100vw;
-  height: 100vh;
+  height: calc(100vh - 60px);
   background: ${theme.colors.main};
   padding: 1rem;
   overflow-y: auto;

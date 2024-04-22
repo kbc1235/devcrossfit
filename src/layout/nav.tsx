@@ -5,6 +5,7 @@ import theme from "../styles/theme";
 import HomeIcon from "../assets/svg/home";
 import MarkerIcon from "../assets/svg/marker";
 import AddIcon from "../assets/svg/add";
+import ChartIcon from "../assets/svg/chart";
 
 export default function Nav() {
   const navigate = useNavigate();
@@ -36,7 +37,13 @@ export default function Nav() {
           fill={active("/add") ? theme.colors.sub2 : theme.colors.white}
         />
       </NavButton>
-      {/* <NavButton onClick={() => navigate("/map")}>asd</NavButton> */}
+      <NavButton onClick={() => navigate("/record")}>
+        <ChartIcon
+          width={24}
+          height={24}
+          fill={active("/record") ? theme.colors.sub2 : theme.colors.white}
+        />
+      </NavButton>
     </NavWrapper>
   );
 }
