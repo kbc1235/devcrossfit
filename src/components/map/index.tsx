@@ -106,7 +106,7 @@ export default function KakaoMap({
             style={{
               // 지도의 크기
               width: "100vw",
-              height: "100vh",
+              height: "calc(100vh - 60px)",
             }}
             isPanto={state.isPanto}
             level={3} // 지도의 확대 레벨
@@ -218,7 +218,7 @@ const CenterBtn = styled(Btn)`
   width: 30px;
   height: 30px;
   position: absolute;
-  bottom: 2dvh;
+  top: calc(100vh - 100px);
   right: 10px;
   z-index: 100;
   border-radius: 4px;

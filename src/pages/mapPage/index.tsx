@@ -43,6 +43,6 @@ export default function MapPage() {
 
 const MapWrapper = styled.div`
   width: 100%;
-  height: 100%;
+  height: calc(100% - 60px);
   margin: -1rem;
 `;

@@ -231,7 +231,7 @@ const MapNavWrapper = styled.div<{ $isOpen: boolean }>`
   transition: left 0.3s ease-in-out;
   width: 100%;
   max-width: 300px;
-  height: 100dvh;
+  height: calc(100vh - 60px);
   background: ${theme.colors.white};
   border-radius: 0 6px 6px 0;
   filter: drop-shadow(0 0 0.75rem rgba(0, 0, 0, 0.2));
