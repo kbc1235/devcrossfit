@@ -96,9 +96,10 @@ export default function RecordPage() {
     <>
       <RecordPageWrapper>
         <RecordTitle>기록 요약</RecordTitle>
-        <Alert>
-          (해당 데이터는 서버에 저장되지 않습니다.[캐시 삭제시 기록 삭제])
-        </Alert>
+        <AlertList>
+          <li>해당 데이터는 서버에 저장되지 않습니다.</li>
+          <li>삭제를 원한다면 브라우저 캐시 삭제를 진행하시면 됩니다.</li>
+        </AlertList>
         <AddBtn type="button" onClick={() => setIsOpen(true)}>
           1RM 등록하기
         </AddBtn>
@@ -251,10 +252,25 @@ const AddRecordPop = ({
     </AddWrapper>
   );
 };
-const Alert = styled.div`
-  font-size: 13px;
-  font-weight: 400;
-  color: #f54848;
+const AlertList = styled.ul`
+  margin-top: 10px;
+  & > li {
+    position: relative;
+    padding-left: 10px;
+    font-size: 13px;
+    color: ${theme.colors.sub2};
+    &::before {
+      content: "";
+      position: absolute;
+      top: 7px;
+      left: 0;
+      display: block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: ${theme.colors.sub2};
+    }
+  }
 `;
 const ConfirmBtn = styled(Btn)<{ $success: boolean }>`
   width: 100%;
